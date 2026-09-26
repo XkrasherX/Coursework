@@ -130,14 +130,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FlatShapes.cpp" />
+    <ClCompile Include="Figure.cpp" />
+    <ClCompile Include="FigureManage.cpp" />
     <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="Segment.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FlatShapes.h" />
+    <ClInclude Include="Figure.h" />
+    <ClInclude Include="FigureManage.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Segment.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">
