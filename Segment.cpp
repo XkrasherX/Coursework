@@ -11,7 +11,7 @@ Segment::Segment()
 }
 
 //конструктор з параметрами. x1, y2 - початок відрізку, x2, y2 - кінець відрізку.
-Segment::Segment(double x1, double y1, double x2, double y2)
+Segment::Segment(float x1, float y1, float x2, float y2)
 {
 	start.x = x1;
 	start.y = y1;
@@ -27,25 +27,25 @@ Segment::Segment(const Segment& other)
 }
 
 //геттер початку відрізку
-Point Segment::getStart() const
+PointSegment Segment::getStart() const
 {
 	return start;
 }
 
 //геттер кінця відрізку
-Point Segment::getEnd() const
+PointSegment Segment::getEnd() const
 {
 	return end;
 }
 
-double Segment::getLength() const
+float Segment::getLength() const
 {
-	double x = end.x - start.x;
-	double y = end.y - start.y;
+	float x = end.x - start.x;
+	float y = end.y - start.y;
 	return sqrt((x * x) + (y * y));
 }
 
-void Segment::scaling(Point center, double factor)
+void Segment::scaling(PointSegment center, float factor)
 {
 	start.x = center.x + (start.x - center.x) * factor;
 	start.y = center.y + (start.y - center.y) * factor;

@@ -126,8 +126,8 @@ double Figure::calculcateArea()
 {
     double sum = 0.0;
     for (int i = 0; i < segments_count; i++) {
-        Point p1 = segments[i].getStart();
-        Point p2 = segments[i].getEnd();
+        PointSegment p1 = segments[i].getStart();
+        PointSegment p2 = segments[i].getEnd();
         sum += ((p1.x * p2.y) - (p2.x * p1.y));
         area = fabs(sum) / 2.0;
         return area;
@@ -141,12 +141,12 @@ void Figure::scale(double factor)
     double sum_y = 0;
     for (int i = 0; i < segments_count; i++)
     {
-        Point p = segments[i].getStart();
+        PointSegment p = segments[i].getStart();
         sum_x += p.x;
         sum_y += p.y;
     }
 
-    Point center;
+    PointSegment center;
     center.x = sum_x / segments_count;
     center.y = sum_y / segments_count;
 

@@ -9,6 +9,10 @@ void FigureManage::addFigureToList(const Figure& figure)
 
 }
 
+void FigureManage::clearAll() {
+    figures.clear();
+}
+
 int FigureManage::getCount() const
 {
 	return figures.size();

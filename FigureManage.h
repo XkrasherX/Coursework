@@ -12,7 +12,9 @@ public:
 	//додати фігуру до списку всіх фігур
 	void addFigureToList(const Figure& figure);
 	
-	
+	//очистити фігури
+	void clearAll();
+
 	int getCount() const;
 	Figure getFigure(int index) const;
 
