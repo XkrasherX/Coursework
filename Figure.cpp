@@ -1,8 +1,18 @@
 #include <cmath>
+#include <vector>
+#include <string>
+
 #include "Figure.h"
 #include "FigureException.h"
 
 const double PI = 3.14159265358979;
+const float CLOSE_OFFSET = 0.1f;
+
+static bool pointInField(const PointSegment& p)
+{
+    // записано так, щоб NaN теж вважався помилкою
+    return p.x >= 0 && p.x <= FIELD_SIZE && p.y >= 0 && p.y <= FIELD_SIZE;
+}
 
 //конструктор за замовчуванням
 Figure::Figure()
@@ -20,6 +30,23 @@ Figure::Figure(const std::string& figure_name, Segment* arr_segment, int count)
     if (count < 3) {
         throw FigureException(L"Фігура повинна складатися принаймі з 3 відрізків!");
     }
+
+    for (int i = 0; i < count; i++) {
+        if (!pointInField(arr_segment[i].getStart()) || !pointInField(arr_segment[i].getEnd())) {
+            throw FigureException(L"Координати повині лежати в межах від 0 до 715!");
+        }
+    }
+
+    for (int i = 0; i < count; i++) {
+        PointSegment end = arr_segment[i].getEnd();
+        PointSegment next_start = arr_segment[(i + 1) % count].getStart();
+        if (fabs(end.x - next_start.x) > CLOSE_OFFSET || fabs(end.y - next_start.y) > CLOSE_OFFSET) {
+            throw FigureException(L"Відрізки не утворюють замкнений контур: кінець відрізка №"
+                + std::to_wstring(i + 1) + L" має збігатися з початком відрізка №"
+                + std::to_wstring((i + 1) % count + 1) + L"!");
+        }
+    }
+
     name = figure_name;
     segments_count = count;
     segments = new Segment[segments_count];
@@ -28,8 +55,8 @@ Figure::Figure(const std::string& figure_name, Segment* arr_segment, int count)
         segments[i] = arr_segment[i];
     }
 
-    area = 0;
-    perimeter = 0;
+    calculatePerimeter();
+    calculcateArea();
 }
 
 //конструктор копіювання
@@ -88,6 +115,9 @@ int Figure::GetSegmentsCount() const
 
 Segment Figure::GetSegment(int index) const
 {
+    if (index < 0 || index >= segments_count) {
+        throw FigureException(L"Відрізка з таким індексом не існує!");
+    }
     return segments[index];
 }
 
@@ -137,9 +167,9 @@ double Figure::calculcateArea()
         PointSegment p1 = segments[i].getStart();
         PointSegment p2 = segments[i].getEnd();
         sum += ((p1.x * p2.y) - (p2.x * p1.y));
+    }
         area = fabs(sum) / 2.0;
         return area;
-    }
 }
 
 void Figure::scale(double factor)
@@ -169,24 +199,79 @@ void Figure::scale(double factor)
     calculcateArea();
 }
 
+bool Figure::isInsideField() const
+{
+    for (int i = 0; i < segments_count; i++) {
+        if (!pointInField(segments[i].getStart()) || !pointInField(segments[i].getEnd())) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Figure::isContainPoints(float px, float py, float offset) const
+{
+    // 1) клік по самій лінії
+    for (int i = 0; i < segments_count; i++) {
+        if (segments[i].distanceToPoint(px, py) <= offset) {
+            return true;
+        }
+    }
+
+    // 2) клік всередині контуру (алгоритм променя)
+    bool inside = false;
+    for (int i = 0; i < segments_count; i++) {
+        PointSegment a = segments[i].getStart();
+        PointSegment b = segments[i].getEnd();
+        if ((a.y > py) != (b.y > py)) {
+            double x_cross = a.x + (double)(py - a.y) * (b.x - a.x) / (b.y - a.y);
+            if (px < x_cross) {
+                inside = !inside;
+            }
+        }
+    }
+    return inside;
+}
+
 std::ostream& operator<<(std::ostream& out, const Figure& other)
 {
-    out << other.name << " " << other.segments_count << " "
-        << other.area << " " << other.perimeter << " " << std::endl;
-    for (int i = 0; i < other.segments_count;i++) {
+    std::streamsize old_precision = out.precision(9);
+    out << other.name << std::endl;
+    out << other.segments_count << " " << other.area << " " << other.perimeter << std::endl;
+    for (int i = 0; i < other.segments_count; i++) {
         out << other.segments[i] << std::endl;
     }
+    out.precision(old_precision);
     return out;
 }
 
 std::istream& operator>>(std::istream& in, Figure& other)
 {
-    in >> other.name >> other.segments_count >> other.area >> other.perimeter;
-    delete[] other.segments;
+    std::string name;
+    int count;
+    double file_area, file_perimeter;  // зчитуємо, але не довіряємо - перерахуємо самі
 
-    other.segments = new Segment[other.segments_count];
-    for (int i = 0; i < other.segments_count;i++) {
-        in >> other.segments[i];
-     }
+    in >> std::ws;
+    if (!std::getline(in, name)) return in;
+    if (!(in >> count >> file_area >> file_perimeter)) return in;
+
+    if (count < 3 || count > 100000) {
+        in.setstate(std::ios::failbit);
+        return in;
+    }
+
+    std::vector<Segment> tmp(count);
+    for (int i = 0; i < count; i++) {
+        if (!(in >> tmp[i])) return in;
+    }
+
+    try {
+        // конструктор сам перевірить межі й замкненість та порахує площу/периметр
+        Figure result(name, tmp.data(), count);
+        other = result;
+    }
+    catch (FigureException&) {
+        in.setstate(std::ios::failbit);
+    }
     return in;
 }

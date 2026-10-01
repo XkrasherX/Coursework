@@ -1,13 +1,14 @@
 #include <cmath>
+#include <fstream>
 #include "FigureManage.h"
 #include "FigureException.h"
 
 const double EPS = 1e-9;
+const float CLICK_OFFSET = 5.0f;
 
 void FigureManage::addFigureToList(const Figure& figure)
 {
 	figures.push_back(figure);
-
 }
 
 void FigureManage::clearAll() {
@@ -16,12 +17,12 @@ void FigureManage::clearAll() {
 
 int FigureManage::getCount() const
 {
-	return figures.size();
+	return (int)figures.size();
 }
 
 Figure FigureManage::getFigure(int index) const
 {
-    if (index < 0 || index > figures.size()) {
+    if (index < 0 || index >= figures.size()) {
         throw FigureException(L"Фігури з таким індексом не існує!");
     }
 	return figures[index];
@@ -54,6 +55,10 @@ void FigureManage::sortByPerimeter()
 
 Figure FigureManage::findLargestAreaWithFewestSegments() const
 {
+    if (figures.empty())
+    {
+        throw FigureException(L"Список фігур порожній");
+    }
     int n = figures.size();
 
     // 1) знаходимо найбільшу площу серед усіх фігур
@@ -85,8 +90,70 @@ Figure FigureManage::findLargestAreaWithFewestSegments() const
 
 void FigureManage::scaleFigure(int index, double factor)
 {
-    if (index < 0 || index > figures.size()) {
+    if (index < 0 || index >= figures.size()) {
         throw FigureException(L"Фігури з таким індексом не існує!");
     }
-    figures[index].scale(factor);
+
+    if (!(factor > 0)) {
+        throw FigureException(L"Коефіцієнт масштабування має бути більшим за 0!");
+    }
+    Figure copy = figures[index];
+    copy.scale(factor);
+
+    if (!copy.isInsideField()) {
+        throw FigureException(L"Після масштабування фігура вийшла б за межі поля (0..715)!");
+    }
+    figures[index] = copy;
+}
+
+int FigureManage::findFigureAt(float x, float y) const
+{
+    for (int i = (int)figures.size() - 1; i >= 0; i--) {
+        if (figures[i].isContainPoints(x, y, CLICK_OFFSET)) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void FigureManage::saveToFile(const std::wstring& path) const
+{
+    std::ofstream out(path);
+	if (!out) {
+		throw FigureException(L"Не вдалося відкрити файл для запису!");
+	}
+
+	out << figures.size() << std::endl;
+	for (size_t i = 0; i < figures.size(); i++) {
+		out << figures[i];
+	}
+
+	if (!out) {
+		throw FigureException(L"Помилка під час запису у файл!");
+	}
+}
+
+void FigureManage::loadFromFile(const std::wstring& path)
+{
+    std::ifstream in(path);
+    if (!in) {
+        throw FigureException(L"Не вдалося відкрити файл для читання!");
+    }
+
+    int n;
+    if (!(in >> n) || n < 0) {
+        throw FigureException(L"Файл має неправильний формат!");
+    }
+
+    std::vector<Figure> loaded;
+    for (int i = 0; i < n; i++) {
+        Figure f;
+        if (!(in >> f)) {
+            throw FigureException(L"Файл пошкоджений або містить некоректну фігуру!");
+        }
+        loaded.push_back(f);
+    }
+
+    // підміняємо список лише коли весь файл прочитано успішно
+    figures = loaded;
 }

@@ -41,7 +41,8 @@ namespace CursovaChemerysDanyloPZ23 {
 
 	private: System::Windows::Forms::Button^ CreateFigureButton;
 	private: System::Windows::Forms::Button^ ClearFieldButton;
-	private: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::TextBox^ InformationFigureTextBox;
+
 	private: System::Windows::Forms::Button^ CalculatePerimeterButton;
 	private: System::Windows::Forms::Button^ CalculcateCircleAreaButton;
 	private: System::Windows::Forms::Button^ LargestAreaButton;
@@ -68,7 +69,7 @@ namespace CursovaChemerysDanyloPZ23 {
 			this->DrawingField = (gcnew System::Windows::Forms::Panel());
 			this->CreateFigureButton = (gcnew System::Windows::Forms::Button());
 			this->ClearFieldButton = (gcnew System::Windows::Forms::Button());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->InformationFigureTextBox = (gcnew System::Windows::Forms::TextBox());
 			this->CalculatePerimeterButton = (gcnew System::Windows::Forms::Button());
 			this->CalculcateCircleAreaButton = (gcnew System::Windows::Forms::Button());
 			this->LargestAreaButton = (gcnew System::Windows::Forms::Button());
@@ -105,15 +106,15 @@ namespace CursovaChemerysDanyloPZ23 {
 			this->ClearFieldButton->UseVisualStyleBackColor = true;
 			this->ClearFieldButton->Click += gcnew System::EventHandler(this, &MainWindow::ClearFieldButton_Click);
 			// 
-			// textBox1
+			// InformationFigureTextBox
 			// 
-			this->textBox1->BackColor = System::Drawing::Color::Bisque;
-			this->textBox1->Location = System::Drawing::Point(755, 200);
-			this->textBox1->Multiline = true;
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->ReadOnly = true;
-			this->textBox1->Size = System::Drawing::Size(258, 197);
-			this->textBox1->TabIndex = 2;
+			this->InformationFigureTextBox->BackColor = System::Drawing::Color::Bisque;
+			this->InformationFigureTextBox->Location = System::Drawing::Point(755, 200);
+			this->InformationFigureTextBox->Multiline = true;
+			this->InformationFigureTextBox->Name = L"InformationFigureTextBox";
+			this->InformationFigureTextBox->ReadOnly = true;
+			this->InformationFigureTextBox->Size = System::Drawing::Size(258, 197);
+			this->InformationFigureTextBox->TabIndex = 2;
 			// 
 			// CalculatePerimeterButton
 			// 
@@ -165,7 +166,7 @@ namespace CursovaChemerysDanyloPZ23 {
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1045, 717);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->InformationFigureTextBox);
 			this->Controls->Add(this->CalculcateCircleAreaButton);
 			this->Controls->Add(this->CalculatePerimeterButton);
 			this->Controls->Add(this->ScaleFigureButton);
@@ -210,9 +211,16 @@ private: System::Void CreateFigureButton_Click(System::Object^ sender, System::E
 
 	if (result == System::Windows::Forms::DialogResult::OK)
 	{
-		System::String^ name = form->FigureName;
-		int segmentsCount = form->SegmentsCount;
-
+		try
+		{
+			manage->addFigureToList(form->GetResultFigure());
+			DrawingField->Invalidate();
+		}
+		catch (FigureException& ex)
+		{
+			System::String^ msg = gcnew System::String(ex.GetMessage().c_str());
+			MessageBox::Show(msg, L"Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
 	}
 }
 };

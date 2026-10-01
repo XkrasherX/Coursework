@@ -133,13 +133,14 @@
     <ClCompile Include="CreateFigureForm.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="FigureManage.cpp" />
-    <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Segment.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CreateFigureForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="EnterCoordinatesWindow.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="FigureException.h" />
     <ClInclude Include="FigureManage.h" />

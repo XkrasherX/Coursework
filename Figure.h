@@ -3,6 +3,8 @@
 #include <string>
 #include "Segment.h"
 
+const float FIELD_SIZE = 715.0f;
+
 class Figure
 {
 private:
@@ -51,6 +53,10 @@ public:
     double calculcateArea();
 
     void scale(double factor);
+
+    bool isInsideField() const;
+
+    bool isContainPoints(float px, float py, float offset) const;
 
     //перевантажені оператори вводу і виводу
     friend std::ostream& operator<<(std::ostream& out, const Figure& other);

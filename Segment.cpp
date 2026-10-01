@@ -45,6 +45,21 @@ float Segment::getLength() const
 	return sqrt((x * x) + (y * y));
 }
 
+float Segment::distanceToPoint(float px, float py) const
+{
+	double dx = end.x - start.x;
+	double dy = end.y - start.y;
+	double len2 = dx * dx + dy * dy;
+	double t = 0.0;
+	if (len2 > 0.0) {
+		t = ((px - start.x) * dx + (py - start.y) * dy) / len2;
+		t = std::max(0.0, std::min(1.0, t));
+	}
+	double cx = start.x + t * dx;
+	double cy = start.y + t * dy;
+	return sqrt((px - cx) * (px - cx) + (py - cy) * (py - cy));
+}
+
 void Segment::scaling(PointSegment center, float factor)
 {
 	start.x = center.x + (start.x - center.x) * factor;

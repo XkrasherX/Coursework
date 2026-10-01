@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "Figure.h"
 
 //клас для взаємодією над фігурами
@@ -25,5 +26,12 @@ public:
 	Figure findLargestAreaWithFewestSegments() const;
 
 	void scaleFigure(int index, double factor);
+
+	//індекс фігури під точкою (x, y) або -1
+	int findFigureAt(float x, float y) const;
+
+	//робота з файлом (використовує оператори << і >>)
+	void saveToFile(const std::wstring& path) const;
+	void loadFromFile(const std::wstring& path);
 };
 
