@@ -53,7 +53,7 @@ void FigureManage::sortByPerimeter()
 
 }
 
-Figure FigureManage::findLargestAreaWithFewestSegments() const
+int FigureManage::findLargestAreaWithFewestSegments() const
 {
     if (figures.empty())
     {
@@ -85,7 +85,7 @@ Figure FigureManage::findLargestAreaWithFewestSegments() const
         }
     }
 
-    return figures[best_index];
+    return best_index;
 }
 
 void FigureManage::scaleFigure(int index, double factor)

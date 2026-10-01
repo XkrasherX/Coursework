@@ -23,7 +23,7 @@ public:
 	void sortByPerimeter();
 
 	//знайти фігуру з найбільшою площею з найменшою кількістю відрізків.
-	Figure findLargestAreaWithFewestSegments() const;
+	int findLargestAreaWithFewestSegments() const;
 
 	void scaleFigure(int index, double factor);
 
