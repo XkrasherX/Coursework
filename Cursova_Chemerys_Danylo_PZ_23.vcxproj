@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CreateFigureForm.cpp" />
+    <ClCompile Include="EnterScaleWindow.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="FigureManage.cpp" />
     <ClCompile Include="MainWindow.cpp" />
@@ -141,6 +142,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="EnterCoordinatesWindow.h" />
+    <ClInclude Include="EnterScaleWindow.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Figure.h" />
     <ClInclude Include="FigureException.h" />
     <ClInclude Include="FigureManage.h" />
@@ -152,6 +156,9 @@
   <ItemGroup>
     <EmbeddedResource Include="CreateFigureForm.resx">
       <DependentUpon>CreateFigureForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnterScaleWindow.resx">
+      <DependentUpon>EnterScaleWindow.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.h</DependentUpon>

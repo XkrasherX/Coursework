@@ -36,6 +36,9 @@
     <ClInclude Include="EnterCoordinatesWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EnterScaleWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainWindow.cpp">
@@ -52,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="CreateFigureForm.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnterScaleWindow.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
