@@ -1,5 +1,6 @@
 #include <cmath>
 #include "FigureManage.h"
+#include "FigureException.h"
 
 const double EPS = 1e-9;
 
@@ -20,6 +21,9 @@ int FigureManage::getCount() const
 
 Figure FigureManage::getFigure(int index) const
 {
+    if (index < 0 || index > figures.size()) {
+        throw FigureException(L"Фігури з таким індексом не існує!");
+    }
 	return figures[index];
 }
 
@@ -81,5 +85,8 @@ Figure FigureManage::findLargestAreaWithFewestSegments() const
 
 void FigureManage::scaleFigure(int index, double factor)
 {
+    if (index < 0 || index > figures.size()) {
+        throw FigureException(L"Фігури з таким індексом не існує!");
+    }
     figures[index].scale(factor);
 }

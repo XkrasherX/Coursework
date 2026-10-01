@@ -1,4 +1,5 @@
 #pragma once
+#include "FigureException.h"
 
 namespace CursovaChemerysDanyloPZ23 {
 
@@ -23,6 +24,16 @@ namespace CursovaChemerysDanyloPZ23 {
 			//
 		}
 
+		property System::String^ FigureName
+		{
+			System::String^ get() { return figureName; }
+		}
+
+		property int SegmentsCount
+		{
+			int get() { return segmentsCount; }
+		}
+
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
@@ -45,9 +56,8 @@ namespace CursovaChemerysDanyloPZ23 {
 	protected:
 
 	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
+		System::String^ figureName;
+		int segmentsCount;
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
@@ -116,6 +126,7 @@ namespace CursovaChemerysDanyloPZ23 {
 			this->SaveDataSegmentsButtom->TabIndex = 4;
 			this->SaveDataSegmentsButtom->Text = L"Зберегти";
 			this->SaveDataSegmentsButtom->UseVisualStyleBackColor = true;
+			this->SaveDataSegmentsButtom->Click += gcnew System::EventHandler(this, &CreateFigureForm::SaveDataSegmentsButtom_Click);
 			// 
 			// CancelSaveDataSegmentsButton
 			// 
@@ -141,6 +152,7 @@ namespace CursovaChemerysDanyloPZ23 {
 			this->Controls->Add(this->FigureNameLabel);
 			this->Name = L"CreateFigureForm";
 			this->Text = L"CreateFigureForm";
+			this->Load += gcnew System::EventHandler(this, &CreateFigureForm::CreateFigureForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -148,5 +160,41 @@ namespace CursovaChemerysDanyloPZ23 {
 #pragma endregion
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
-	};
+	private: System::Void CreateFigureForm_Load(System::Object^ sender, System::EventArgs^ e) {
+	}
+private: System::Void SaveDataSegmentsButtom_Click(System::Object^ sender, System::EventArgs^ e) {
+	try
+	{
+		System::String^ input_name = CreateFigureNameTextBox->Text->Trim();
+
+		if (input_name->Length == 0)
+		{
+			throw FigureException(L"Введіть назву фігури.");
+		}
+
+		int count;
+		
+		if (Int32::TryParse(CreateNumOfSegmentsTextBox->Text, count))
+		{
+			throw FigureException(L"Кількість відрізків має бути цілим числом.");
+		}
+
+		if (count < 3)
+		{
+			throw FigureException(L"Фігура повинна складатися принаймі з 3 відрізків.");
+		}
+
+		figureName = input_name;
+		segmentsCount = count;
+
+		this->DialogResult = System::Windows::Forms::DialogResult::OK;
+		this->Close();
+	}
+	catch (FigureException& ex)
+	{
+		System::String^ msg = gcnew System::String(ex.GetMessage().c_str());
+		MessageBox::Show(msg, L"Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+	}
+}
+};
 }

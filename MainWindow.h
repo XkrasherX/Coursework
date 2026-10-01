@@ -1,6 +1,6 @@
 #pragma once
-
 #include "FigureManage.h"
+#include "CreateFigureForm.h"
 
 namespace CursovaChemerysDanyloPZ23 {
 
@@ -93,6 +93,7 @@ namespace CursovaChemerysDanyloPZ23 {
 			this->CreateFigureButton->TabIndex = 1;
 			this->CreateFigureButton->Text = L"Створити фігуру";
 			this->CreateFigureButton->UseVisualStyleBackColor = true;
+			this->CreateFigureButton->Click += gcnew System::EventHandler(this, &MainWindow::CreateFigureButton_Click);
 			// 
 			// ClearFieldButton
 			// 
@@ -202,6 +203,17 @@ namespace CursovaChemerysDanyloPZ23 {
 private: System::Void ClearFieldButton_Click(System::Object^ sender, System::EventArgs^ e) {
 	manage->clearAll();
 	DrawingField->Invalidate();
+}
+private: System::Void CreateFigureButton_Click(System::Object^ sender, System::EventArgs^ e) {
+	CreateFigureForm^ form = gcnew CreateFigureForm();
+	System::Windows::Forms::DialogResult result = form->ShowDialog();
+
+	if (result == System::Windows::Forms::DialogResult::OK)
+	{
+		System::String^ name = form->FigureName;
+		int segmentsCount = form->SegmentsCount;
+
+	}
 }
 };
 }

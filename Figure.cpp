@@ -1,4 +1,6 @@
+#include <cmath>
 #include "Figure.h"
+#include "FigureException.h"
 
 const double PI = 3.14159265358979;
 
@@ -13,8 +15,11 @@ Figure::Figure()
 }
 
 // конструктор з параметрами, ім'я, відрізки, к-ть відрізків
-Figure::Figure(const std::string figure_name, Segment* arr_segment, int count)
+Figure::Figure(const std::string& figure_name, Segment* arr_segment, int count)
 {
+    if (count < 3) {
+        throw FigureException(L"Фігура повинна складатися принаймі з 3 відрізків!");
+    }
     name = figure_name;
     segments_count = count;
     segments = new Segment[segments_count];
@@ -108,6 +113,9 @@ int Figure::maxFiguresBySegments() const
 
 double Figure::areaOfInscribedCircle() const
 {
+    if (perimeter == 0) {
+        throw FigureException(L"Неможливо обчислити площу вписано кола, периметр фігури дорівнює 0!");
+    }
     double radius = (2.0 * area) / perimeter;
     return radius * radius * PI;
 }

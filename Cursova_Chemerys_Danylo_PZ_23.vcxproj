@@ -141,6 +141,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Figure.h" />
+    <ClInclude Include="FigureException.h" />
     <ClInclude Include="FigureManage.h" />
     <ClInclude Include="MainWindow.h">
       <FileType>CppForm</FileType>

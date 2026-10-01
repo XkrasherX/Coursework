@@ -17,7 +17,7 @@ public:
 	Figure();
 
     //конструктор з параметрами
-	Figure(const std::string figure_name, Segment* arr_segment, int count);
+	Figure(const std::string& figure_name, Segment* arr_segment, int count);
 
     //конструктор копіювання
     Figure(const Figure& other);
