@@ -5,12 +5,13 @@
 #include "Figure.h"
 #include "FigureException.h"
 
-const double PI = 3.14159265358979;
-const float CLOSE_OFFSET = 0.1f;
+const float FIELD_SIZE = 715.0f; //розмір поля
+const double PI = 3.14159265358979; //число пі
+const float CLOSE_OFFSET = 0.1f; //похибка в утворенні послідовних відрізків
 
-static bool pointInField(const PointSegment& p)
+//перевірка чи точка всередині поля
+static bool pointInField(const PointSegment& p) 
 {
-    // записано так, щоб NaN теж вважався помилкою
     return p.x >= 0 && p.x <= FIELD_SIZE && p.y >= 0 && p.y <= FIELD_SIZE;
 }
 
@@ -74,6 +75,7 @@ Figure::Figure(const Figure& other)
     }
 }
 
+//конструктор переміщення
 Figure& Figure::operator=(const Figure& other)
 {
     if (this == &other) return *this;
@@ -103,16 +105,13 @@ Figure::~Figure()
     segments = nullptr;
 }
 
-std::string Figure::GetName() const
-{
-    return name;
-}
+//геттер ім'я
+std::string Figure::GetName() const { return name; }
 
-int Figure::GetSegmentsCount() const
-{
-    return segments_count;
-}
+//геттер кількості відрізків
+int Figure::GetSegmentsCount() const { return segments_count; }
 
+//геттер відрізка
 Segment Figure::GetSegment(int index) const
 {
     if (index < 0 || index >= segments_count) {
@@ -121,26 +120,20 @@ Segment Figure::GetSegment(int index) const
     return segments[index];
 }
 
-double Figure::GetArea() const
-{
-    return area;
-}
+//геттер площі
+double Figure::GetArea() const { return area; }
 
-double Figure::GetPerimeter() const
-{
-    return perimeter;
-}
+//геттер периметра
+double Figure::GetPerimeter() const { return perimeter; }
 
-void Figure::SetName(const std::string& figureName)
-{
-    name = figureName;
-}
 
-int Figure::maxFiguresBySegments() const
+//максимум фігур з заданою кількістю відрізків
+int Figure::maxFiguresBySegments() const 
 {
     return ((segments_count - 1) * (segments_count - 2)) / 2;
 }
 
+//площа вписаного кола
 double Figure::areaOfInscribedCircle() const
 {
     if (perimeter == 0) {
@@ -150,6 +143,7 @@ double Figure::areaOfInscribedCircle() const
     return radius * radius * PI;
 }
 
+//порахувати периметр фігури
 double Figure::calculatePerimeter()
 {
     double total_sum = 0.0;
@@ -160,6 +154,7 @@ double Figure::calculatePerimeter()
     return perimeter;
 }
 
+//порахувати площу фігури
 double Figure::calculcateArea()
 {
     double sum = 0.0;
@@ -172,9 +167,10 @@ double Figure::calculcateArea()
         return area;
 }
 
+//масштабувати фігуру відносно коефіцієнта factor
 void Figure::scale(double factor)
 {
-    // 1) знаходимо центр фігури - середнє арифметичне всіх вершин
+    //знаходимо центр фігури - середнє арифметичне всіх вершин
     double sum_x = 0;
     double sum_y = 0;
     for (int i = 0; i < segments_count; i++)
@@ -188,17 +184,18 @@ void Figure::scale(double factor)
     center.x = sum_x / segments_count;
     center.y = sum_y / segments_count;
 
-    // 2) масштабуємо кожен відрізок відносно цього центру
+    //масштабуємо кожен відрізок відносно цього центру
     for (int i = 0; i < segments_count; i++)
     {
         segments[i].scaling(center, factor);
     }
 
-    // 3) периметр і площа змінились разом з координатами - перераховуємо
+    //периметр і площа змінились разом з координатами - перераховуємо
     calculatePerimeter();
     calculcateArea();
 }
 
+//перевіряємо чи відрізок всередині поля
 bool Figure::isInsideField() const
 {
     for (int i = 0; i < segments_count; i++) {
@@ -209,30 +206,7 @@ bool Figure::isInsideField() const
     return true;
 }
 
-bool Figure::isContainPoints(float px, float py, float offset) const
-{
-    // 1) клік по самій лінії
-    for (int i = 0; i < segments_count; i++) {
-        if (segments[i].distanceToPoint(px, py) <= offset) {
-            return true;
-        }
-    }
-
-    // 2) клік всередині контуру (алгоритм променя)
-    bool inside = false;
-    for (int i = 0; i < segments_count; i++) {
-        PointSegment a = segments[i].getStart();
-        PointSegment b = segments[i].getEnd();
-        if ((a.y > py) != (b.y > py)) {
-            double x_cross = a.x + (double)(py - a.y) * (b.x - a.x) / (b.y - a.y);
-            if (px < x_cross) {
-                inside = !inside;
-            }
-        }
-    }
-    return inside;
-}
-
+//оператор виводу
 std::ostream& operator<<(std::ostream& out, const Figure& other)
 {
     std::streamsize old_precision = out.precision(9);
@@ -245,29 +219,29 @@ std::ostream& operator<<(std::ostream& out, const Figure& other)
     return out;
 }
 
+//оператор вводу
 std::istream& operator>>(std::istream& in, Figure& other)
 {
-    std::string name;
-    int count;
-    double file_area, file_perimeter;  // зчитуємо, але не довіряємо - перерахуємо самі
-
+    std::string file_name;
+    int file_count;
+   
     in >> std::ws;
-    if (!std::getline(in, name)) return in;
-    if (!(in >> count >> file_area >> file_perimeter)) return in;
+    if (!std::getline(in, file_name)) return in;
+    if (!(in >> file_count)) return in;
 
-    if (count < 3 || count > 100000) {
+    if (file_count < 3 || file_count > 100000) {
         in.setstate(std::ios::failbit);
         return in;
     }
 
-    std::vector<Segment> tmp(count);
-    for (int i = 0; i < count; i++) {
+    std::vector<Segment> tmp(file_count);
+    for (int i = 0; i < file_count; i++) {
         if (!(in >> tmp[i])) return in;
     }
 
     try {
-        // конструктор сам перевірить межі й замкненість та порахує площу/периметр
-        Figure result(name, tmp.data(), count);
+        
+        Figure result(file_name, tmp.data(), file_count);
         other = result;
     }
     catch (FigureException&) {

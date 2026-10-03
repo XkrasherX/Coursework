@@ -31,10 +31,9 @@ public:
 	//довжина відрізка
 	float getLength() const;
 
-	//відстань від точки до відрізка
-	float distanceToPoint(float px, float py) const;
-
+	//зміна масштабу фігури на коефіцієнт factor
 	void scaling(PointSegment center, float factor);
+
 	//перевантажені оператори вводу і виводу
 	friend std::ostream& operator<<(std::ostream& out, const Segment& other);
 	friend std::istream& operator>>(std::istream& in, Segment& other);

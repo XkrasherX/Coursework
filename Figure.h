@@ -3,8 +3,6 @@
 #include <string>
 #include "Segment.h"
 
-const float FIELD_SIZE = 715.0f;
-
 class Figure
 {
 private:
@@ -24,7 +22,7 @@ public:
     //конструктор копіювання
     Figure(const Figure& other);
 
-    //оператор присвоєння
+    //оператор переміщення
     Figure& operator=(const Figure& other);
     
     //деструктор
@@ -36,9 +34,6 @@ public:
     Segment GetSegment(int index) const;
     double GetArea() const;
     double GetPerimeter() const;
-
-    //сеттер
-    void SetName(const std::string& figureName);
 
     //максимум фігур з заданою кількістю відрізків
     int maxFiguresBySegments() const;
@@ -52,11 +47,11 @@ public:
     //порахувати площу
     double calculcateArea();
 
+    //зміна розмірів фігури відносно коефіцієнту factor
     void scale(double factor);
 
+    //перевірка чи точка знаходиться в межах поля
     bool isInsideField() const;
-
-    bool isContainPoints(float px, float py, float offset) const;
 
     //перевантажені оператори вводу і виводу
     friend std::ostream& operator<<(std::ostream& out, const Figure& other);

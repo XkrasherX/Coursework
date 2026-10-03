@@ -38,6 +38,7 @@ PointSegment Segment::getEnd() const
 	return end;
 }
 
+//довжина відрізку
 float Segment::getLength() const
 {
 	float x = end.x - start.x;
@@ -45,21 +46,7 @@ float Segment::getLength() const
 	return sqrt((x * x) + (y * y));
 }
 
-float Segment::distanceToPoint(float px, float py) const
-{
-	double dx = end.x - start.x;
-	double dy = end.y - start.y;
-	double len2 = dx * dx + dy * dy;
-	double t = 0.0;
-	if (len2 > 0.0) {
-		t = ((px - start.x) * dx + (py - start.y) * dy) / len2;
-		t = std::max(0.0, std::min(1.0, t));
-	}
-	double cx = start.x + t * dx;
-	double cy = start.y + t * dy;
-	return sqrt((px - cx) * (px - cx) + (py - cy) * (py - cy));
-}
-
+//масштабування фігури відносно центру фігури
 void Segment::scaling(PointSegment center, float factor)
 {
 	start.x = center.x + (start.x - center.x) * factor;
@@ -68,6 +55,7 @@ void Segment::scaling(PointSegment center, float factor)
 	end.y = center.y + (end.y - center.y) * factor;
 }
 
+//оператор виводу
 std::ostream& operator<<(std::ostream& out, const Segment& other)
 {
 	out << other.start.x << " " << other.start.y << " "
@@ -75,6 +63,7 @@ std::ostream& operator<<(std::ostream& out, const Segment& other)
 	return out;
 }
 
+//оператор вводу
 std::istream& operator>>(std::istream& in, Segment& other)
 {
 	in >> other.start.x >> other.start.y >> other.end.x >> other.end.y;

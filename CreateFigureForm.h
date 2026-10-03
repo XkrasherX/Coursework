@@ -23,20 +23,7 @@ namespace CursovaChemerysDanyloPZ23 {
 			result_figure = nullptr;
 		}
 
-		property System::String^ FigureName
-		{
-			System::String^ get() { return figureName; }
-		}
-
-		property int SegmentsCount
-		{
-			int get() { return segmentsCount; }
-		}
-
-		Figure GetResultFigure()
-		{
-			return *result_figure;
-		}
+		Figure GetResultFigure() { return *result_figure; }
 
 	protected:
 		/// <summary>
@@ -50,6 +37,7 @@ namespace CursovaChemerysDanyloPZ23 {
 			}
 			if (result_figure) {
 				delete result_figure;
+				result_figure = nullptr;
 			}
 		}
 	private: System::Windows::Forms::Label^ FigureNameLabel;
@@ -75,6 +63,7 @@ namespace CursovaChemerysDanyloPZ23 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(CreateFigureForm::typeid));
 			this->FigureNameLabel = (gcnew System::Windows::Forms::Label());
 			this->CreateFigureNameTextBox = (gcnew System::Windows::Forms::TextBox());
 			this->NumOfSegmentsLabel = (gcnew System::Windows::Forms::Label());
@@ -97,6 +86,8 @@ namespace CursovaChemerysDanyloPZ23 {
 			// 
 			// CreateFigureNameTextBox
 			// 
+			this->CreateFigureNameTextBox->BackColor = System::Drawing::Color::LightPink;
+			this->CreateFigureNameTextBox->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->CreateFigureNameTextBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
 			this->CreateFigureNameTextBox->Location = System::Drawing::Point(307, 60);
@@ -117,6 +108,8 @@ namespace CursovaChemerysDanyloPZ23 {
 			// 
 			// CreateNumOfSegmentsTextBox
 			// 
+			this->CreateNumOfSegmentsTextBox->BackColor = System::Drawing::Color::LightPink;
+			this->CreateNumOfSegmentsTextBox->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->CreateNumOfSegmentsTextBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
 			this->CreateNumOfSegmentsTextBox->Location = System::Drawing::Point(371, 169);
@@ -126,33 +119,37 @@ namespace CursovaChemerysDanyloPZ23 {
 			// 
 			// SaveDataSegmentsButtom
 			// 
+			this->SaveDataSegmentsButtom->BackColor = System::Drawing::Color::LightPink;
+			this->SaveDataSegmentsButtom->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->SaveDataSegmentsButtom->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->SaveDataSegmentsButtom->Location = System::Drawing::Point(96, 273);
+			this->SaveDataSegmentsButtom->Location = System::Drawing::Point(89, 273);
 			this->SaveDataSegmentsButtom->Name = L"SaveDataSegmentsButtom";
-			this->SaveDataSegmentsButtom->Size = System::Drawing::Size(145, 46);
+			this->SaveDataSegmentsButtom->Size = System::Drawing::Size(173, 46);
 			this->SaveDataSegmentsButtom->TabIndex = 4;
 			this->SaveDataSegmentsButtom->Text = L"Зберегти";
-			this->SaveDataSegmentsButtom->UseVisualStyleBackColor = true;
+			this->SaveDataSegmentsButtom->UseVisualStyleBackColor = false;
 			this->SaveDataSegmentsButtom->Click += gcnew System::EventHandler(this, &CreateFigureForm::SaveDataSegmentsButtom_Click);
 			// 
 			// CancelSaveDataSegmentsButton
 			// 
+			this->CancelSaveDataSegmentsButton->BackColor = System::Drawing::Color::LightPink;
+			this->CancelSaveDataSegmentsButton->DialogResult = System::Windows::Forms::DialogResult::Cancel;
+			this->CancelSaveDataSegmentsButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->CancelSaveDataSegmentsButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->CancelSaveDataSegmentsButton->Location = System::Drawing::Point(391, 273);
+			this->CancelSaveDataSegmentsButton->Location = System::Drawing::Point(382, 273);
 			this->CancelSaveDataSegmentsButton->Name = L"CancelSaveDataSegmentsButton";
-			this->CancelSaveDataSegmentsButton->Size = System::Drawing::Size(145, 46);
-			this->CancelSaveDataSegmentsButton->TabIndex = 4;
-			this->CancelSaveDataSegmentsButton->Text = L"Скасувати";
-			this->CancelSaveDataSegmentsButton->UseVisualStyleBackColor = true;
+			this->CancelSaveDataSegmentsButton->Size = System::Drawing::Size(168, 46);
 			this->CancelSaveDataSegmentsButton->TabIndex = 5;
-			this->CancelSaveDataSegmentsButton->DialogResult = System::Windows::Forms::DialogResult::Cancel;
+			this->CancelSaveDataSegmentsButton->Text = L"Скасувати";
+			this->CancelSaveDataSegmentsButton->UseVisualStyleBackColor = false;
 			// 
 			// CreateFigureForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::Pink;
 			this->ClientSize = System::Drawing::Size(706, 341);
 			this->Controls->Add(this->CancelSaveDataSegmentsButton);
 			this->Controls->Add(this->SaveDataSegmentsButtom);
@@ -160,8 +157,11 @@ namespace CursovaChemerysDanyloPZ23 {
 			this->Controls->Add(this->NumOfSegmentsLabel);
 			this->Controls->Add(this->CreateFigureNameTextBox);
 			this->Controls->Add(this->FigureNameLabel);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"CreateFigureForm";
-			this->Text = L"CreateFigureForm";
+			this->Text = L"Створення фігури";
 			this->Load += gcnew System::EventHandler(this, &CreateFigureForm::CreateFigureForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -172,47 +172,48 @@ namespace CursovaChemerysDanyloPZ23 {
 	}
 	private: System::Void CreateFigureForm_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
-private: System::Void SaveDataSegmentsButtom_Click(System::Object^ sender, System::EventArgs^ e) {
-	try
-	{
-		System::String^ enteredName = CreateFigureNameTextBox->Text->Trim();
 
-		if (enteredName->Length == 0)
+	private: System::Void SaveDataSegmentsButtom_Click(System::Object^ sender, System::EventArgs^ e) {
+		try
 		{
-			throw FigureException(L"Введіть назву фігури.");
+			System::String^ enteredName = CreateFigureNameTextBox->Text->Trim();
+
+			if (enteredName->Length == 0)
+			{
+				throw FigureException(L"Введіть назву фігури.");
+			}
+
+			int count;
+			bool isNumber = Int32::TryParse(CreateNumOfSegmentsTextBox->Text, count);
+
+			if (!isNumber)
+			{
+				throw FigureException(L"Кількість відрізків має бути цілим числом.");
+			}
+
+			if (count < 3)
+			{
+				throw FigureException(L"Фігура повинна складатися щонайменше з 3 відрізків.");
+			}
+
+			EnterCoordinatesWindow^ coordsForm = gcnew EnterCoordinatesWindow(enteredName, count);
+			System::Windows::Forms::DialogResult coordsResult = coordsForm->ShowDialog();
+
+			if (coordsResult == System::Windows::Forms::DialogResult::OK)
+			{
+				delete result_figure;
+				result_figure = new Figure(coordsForm->GetResultFigure());
+
+				this->DialogResult = System::Windows::Forms::DialogResult::OK;
+				this->Close();
+			}
+			// якщо Cancel - нічого не робимо, CreateFigureForm лишається відкритою
 		}
-
-		int count;
-		bool isNumber = Int32::TryParse(CreateNumOfSegmentsTextBox->Text, count);
-
-		if (!isNumber)
+		catch (FigureException& ex)
 		{
-			throw FigureException(L"Кількість відрізків має бути цілим числом.");
+			System::String^ msg = gcnew System::String(ex.GetMessage().c_str());
+			MessageBox::Show(msg, L"Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
-
-		if (count < 3)
-		{
-			throw FigureException(L"Фігура повинна складатися щонайменше з 3 відрізків.");
-		}
-
-		EnterCoordinatesWindow^ coordsForm = gcnew EnterCoordinatesWindow(enteredName, count);
-		System::Windows::Forms::DialogResult coordsResult = coordsForm->ShowDialog();
-
-		if (coordsResult == System::Windows::Forms::DialogResult::OK)
-		{
-			delete result_figure;
-			result_figure = new Figure(coordsForm->GetResultFigure());
-
-			this->DialogResult = System::Windows::Forms::DialogResult::OK;
-			this->Close();
-		}
-		// якщо Cancel - нічого не робимо, CreateFigureForm лишається відкритою
 	}
-	catch (FigureException& ex)
-	{
-		System::String^ msg = gcnew System::String(ex.GetMessage().c_str());
-		MessageBox::Show(msg, L"Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	}
-}
 };
 }

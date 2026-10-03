@@ -4,22 +4,17 @@
 #include "FigureException.h"
 
 const double EPS = 1e-9;
-const float CLICK_OFFSET = 5.0f;
 
-void FigureManage::addFigureToList(const Figure& figure)
-{
-	figures.push_back(figure);
-}
+//додати фігуру до списку усіх фігур
+void FigureManage::addFigureToList(const Figure& figure) { figures.push_back(figure); }
 
-void FigureManage::clearAll() {
-    figures.clear();
-}
+//очистити список усіх фігур
+void FigureManage::clearAll() { figures.clear(); }
 
-int FigureManage::getCount() const
-{
-	return (int)figures.size();
-}
+//геттер кількості фігур у списку
+int FigureManage::getCount() const { return (int)figures.size(); }
 
+//геттер фігури за індексом
 Figure FigureManage::getFigure(int index) const
 {
     if (index < 0 || index >= figures.size()) {
@@ -28,6 +23,7 @@ Figure FigureManage::getFigure(int index) const
 	return figures[index];
 }
 
+//відсортувати за периметром(метод вибірки)
 void FigureManage::sortByPerimeter()
 {
     int n = figures.size();
@@ -53,6 +49,7 @@ void FigureManage::sortByPerimeter()
 
 }
 
+//знайти найбільшу площу з найменшою кількістю відрізків
 int FigureManage::findLargestAreaWithFewestSegments() const
 {
     if (figures.empty())
@@ -61,7 +58,7 @@ int FigureManage::findLargestAreaWithFewestSegments() const
     }
     int n = figures.size();
 
-    // 1) знаходимо найбільшу площу серед усіх фігур
+    //знаходимо найбільшу площу серед усіх фігур
     double max_area = figures[0].GetArea();
     for (int i = 1; i < n; i++)
     {
@@ -71,8 +68,7 @@ int FigureManage::findLargestAreaWithFewestSegments() const
         }
     }
 
-    // 2) серед фігур з такою (чи майже такою - через похибки double) площею
-    //    обираємо ту, що складається з найменшої кількості відрізків
+    //серед фігур з такою площею обираємо ту, що складається з найменшої кількості відрізків
     int best_index = 0;
     bool is_found = false;
     for (int i = 0; i < n; i++)
@@ -88,6 +84,7 @@ int FigureManage::findLargestAreaWithFewestSegments() const
     return best_index;
 }
 
+//змінити розмір фігури з індексом index на коефіцієнт factor
 void FigureManage::scaleFigure(int index, double factor)
 {
     if (index < 0 || index >= figures.size()) {
@@ -106,16 +103,7 @@ void FigureManage::scaleFigure(int index, double factor)
     figures[index] = copy;
 }
 
-int FigureManage::findFigureAt(float x, float y) const
-{
-    for (int i = (int)figures.size() - 1; i >= 0; i--) {
-        if (figures[i].isContainPoints(x, y, CLICK_OFFSET)) {
-            return i;
-        }
-    }
-    return -1;
-}
-
+//зберегти у файл
 void FigureManage::saveToFile(const std::wstring& path) const
 {
     std::ofstream out(path);
@@ -133,6 +121,7 @@ void FigureManage::saveToFile(const std::wstring& path) const
 	}
 }
 
+//завантажити з файлу
 void FigureManage::loadFromFile(const std::wstring& path)
 {
     std::ifstream in(path);

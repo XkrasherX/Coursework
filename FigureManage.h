@@ -3,7 +3,7 @@
 #include <string>
 #include "Figure.h"
 
-//клас для взаємодією над фігурами
+//клас для взаємодії над фігурами
 class FigureManage
 {
 private: 
@@ -16,6 +16,7 @@ public:
 	//очистити фігури
 	void clearAll();
 
+	//геттери
 	int getCount() const;
 	Figure getFigure(int index) const;
 
@@ -25,12 +26,10 @@ public:
 	//знайти фігуру з найбільшою площею з найменшою кількістю відрізків.
 	int findLargestAreaWithFewestSegments() const;
 
+	//змінити розмір фігури з індексом index на коеф factor
 	void scaleFigure(int index, double factor);
 
-	//індекс фігури під точкою (x, y) або -1
-	int findFigureAt(float x, float y) const;
-
-	//робота з файлом (використовує оператори << і >>)
+	//зберегти/завантажити з файлу
 	void saveToFile(const std::wstring& path) const;
 	void loadFromFile(const std::wstring& path);
 };
