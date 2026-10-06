@@ -149,14 +149,16 @@ namespace CursovaChemerysDanyloPZ23 {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			this->BackColor = System::Drawing::Color::Pink;
-			this->ClientSize = System::Drawing::Size(706, 341);
+			this->ClientSize = System::Drawing::Size(657, 341);
 			this->Controls->Add(this->CancelSaveDataSegmentsButton);
 			this->Controls->Add(this->SaveDataSegmentsButtom);
 			this->Controls->Add(this->CreateNumOfSegmentsTextBox);
 			this->Controls->Add(this->NumOfSegmentsLabel);
 			this->Controls->Add(this->CreateFigureNameTextBox);
 			this->Controls->Add(this->FigureNameLabel);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;

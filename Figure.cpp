@@ -209,13 +209,14 @@ bool Figure::isInsideField() const
 //оператор виводу
 std::ostream& operator<<(std::ostream& out, const Figure& other)
 {
-    std::streamsize old_precision = out.precision(9);
-    out << other.name << std::endl;
-    out << other.segments_count << " " << other.area << " " << other.perimeter << std::endl;
+    out << "Назва фігури: " << other.name << std::endl;
+    out << "Кількість відрізків: " << other.segments_count << "\n"
+        << "Площа фігури: " << other.area << "\n"
+        << "Периметр фігури: " << other.perimeter << std::endl;
+    out << "Координати відрізків\n X0  Y0  X1  Y1\n";
     for (int i = 0; i < other.segments_count; i++) {
         out << other.segments[i] << std::endl;
     }
-    out.precision(old_precision);
     return out;
 }
 

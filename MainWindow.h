@@ -8,6 +8,8 @@
 #include "CreateFigureForm.h"
 #include "EnterScaleWindow.h"
 
+const float FIELD_SIZE = 715.0f;
+
 namespace CursovaChemerysDanyloPZ23 {
 
 	using namespace System;
@@ -29,6 +31,7 @@ namespace CursovaChemerysDanyloPZ23 {
 			InitializeComponent();
 			manage = new FigureManage;
 			selected_index = -1;
+			RefreshFigureList();
 		}
 
 	protected:
@@ -63,6 +66,8 @@ namespace CursovaChemerysDanyloPZ23 {
 	private: System::Windows::Forms::Button^ LoadFromFileButton;
 	private: System::Windows::Forms::ComboBox^ FigureSelectComboBox;
 	private: System::Windows::Forms::Panel^ DrawingField;
+	private: System::Windows::Forms::Button^ CalculateMaxFiguresButton;
+
 
 	protected:
 
@@ -89,12 +94,12 @@ namespace CursovaChemerysDanyloPZ23 {
 			this->LoadFromFileButton = (gcnew System::Windows::Forms::Button());
 			this->FigureSelectComboBox = (gcnew System::Windows::Forms::ComboBox());
 			this->DrawingField = (gcnew System::Windows::Forms::Panel());
+			this->CalculateMaxFiguresButton = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// CreateFigureButton
 			// 
 			this->CreateFigureButton->BackColor = System::Drawing::Color::LightPink;
-			this->CreateFigureButton->FlatAppearance->BorderSize = 0;
 			this->CreateFigureButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->CreateFigureButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -109,7 +114,6 @@ namespace CursovaChemerysDanyloPZ23 {
 			// ClearFieldButton
 			// 
 			this->ClearFieldButton->BackColor = System::Drawing::Color::LightPink;
-			this->ClearFieldButton->FlatAppearance->BorderSize = 0;
 			this->ClearFieldButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->ClearFieldButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -124,7 +128,6 @@ namespace CursovaChemerysDanyloPZ23 {
 			// CalculatePerimeterButton
 			// 
 			this->CalculatePerimeterButton->BackColor = System::Drawing::Color::LightPink;
-			this->CalculatePerimeterButton->FlatAppearance->BorderSize = 0;
 			this->CalculatePerimeterButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->CalculatePerimeterButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
@@ -139,9 +142,8 @@ namespace CursovaChemerysDanyloPZ23 {
 			// CalculcateCircleAreaButton
 			// 
 			this->CalculcateCircleAreaButton->BackColor = System::Drawing::Color::LightPink;
-			this->CalculcateCircleAreaButton->FlatAppearance->BorderSize = 0;
 			this->CalculcateCircleAreaButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->CalculcateCircleAreaButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular,
+			this->CalculcateCircleAreaButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
 			this->CalculcateCircleAreaButton->Location = System::Drawing::Point(880, 397);
 			this->CalculcateCircleAreaButton->Name = L"CalculcateCircleAreaButton";
@@ -154,13 +156,12 @@ namespace CursovaChemerysDanyloPZ23 {
 			// LargestAreaButton
 			// 
 			this->LargestAreaButton->BackColor = System::Drawing::Color::LightPink;
-			this->LargestAreaButton->FlatAppearance->BorderSize = 0;
 			this->LargestAreaButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->LargestAreaButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->LargestAreaButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->LargestAreaButton->Location = System::Drawing::Point(736, 460);
+			this->LargestAreaButton->Location = System::Drawing::Point(736, 523);
 			this->LargestAreaButton->Name = L"LargestAreaButton";
-			this->LargestAreaButton->Size = System::Drawing::Size(297, 57);
+			this->LargestAreaButton->Size = System::Drawing::Size(138, 57);
 			this->LargestAreaButton->TabIndex = 1;
 			this->LargestAreaButton->Text = L"Найбільша площа";
 			this->LargestAreaButton->UseVisualStyleBackColor = false;
@@ -169,13 +170,12 @@ namespace CursovaChemerysDanyloPZ23 {
 			// SortFiguresButton
 			// 
 			this->SortFiguresButton->BackColor = System::Drawing::Color::LightPink;
-			this->SortFiguresButton->FlatAppearance->BorderSize = 0;
 			this->SortFiguresButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->SortFiguresButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->SortFiguresButton->Location = System::Drawing::Point(736, 523);
+			this->SortFiguresButton->Location = System::Drawing::Point(880, 523);
 			this->SortFiguresButton->Name = L"SortFiguresButton";
-			this->SortFiguresButton->Size = System::Drawing::Size(297, 57);
+			this->SortFiguresButton->Size = System::Drawing::Size(153, 57);
 			this->SortFiguresButton->TabIndex = 1;
 			this->SortFiguresButton->Text = L"Сортування";
 			this->SortFiguresButton->UseVisualStyleBackColor = false;
@@ -184,7 +184,6 @@ namespace CursovaChemerysDanyloPZ23 {
 			// ScaleFigureButton
 			// 
 			this->ScaleFigureButton->BackColor = System::Drawing::Color::LightPink;
-			this->ScaleFigureButton->FlatAppearance->BorderSize = 0;
 			this->ScaleFigureButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->ScaleFigureButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -206,14 +205,12 @@ namespace CursovaChemerysDanyloPZ23 {
 			this->InformationFigureTextBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->InformationFigureTextBox->Size = System::Drawing::Size(297, 219);
 			this->InformationFigureTextBox->TabIndex = 2;
-			this->InformationFigureTextBox->TextChanged += gcnew System::EventHandler(this, &MainWindow::InformationFigureTextBox_TextChanged);
 			// 
 			// SaveToFileButton
 			// 
 			this->SaveToFileButton->BackColor = System::Drawing::Color::LightPink;
-			this->SaveToFileButton->FlatAppearance->BorderSize = 0;
 			this->SaveToFileButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->SaveToFileButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->SaveToFileButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->SaveToFileButton->Location = System::Drawing::Point(736, 649);
 			this->SaveToFileButton->Name = L"SaveToFileButton";
@@ -226,9 +223,8 @@ namespace CursovaChemerysDanyloPZ23 {
 			// LoadFromFileButton
 			// 
 			this->LoadFromFileButton->BackColor = System::Drawing::Color::LightPink;
-			this->LoadFromFileButton->FlatAppearance->BorderSize = 0;
 			this->LoadFromFileButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->LoadFromFileButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->LoadFromFileButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->LoadFromFileButton->Location = System::Drawing::Point(880, 649);
 			this->LoadFromFileButton->Name = L"LoadFromFileButton";
@@ -253,11 +249,26 @@ namespace CursovaChemerysDanyloPZ23 {
 			// 
 			this->DrawingField->BackColor = System::Drawing::Color::LightPink;
 			this->DrawingField->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
-			this->DrawingField->Location = System::Drawing::Point(10, 3);
+			this->DrawingField->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->DrawingField->Location = System::Drawing::Point(1, 2);
 			this->DrawingField->Name = L"DrawingField";
 			this->DrawingField->Size = System::Drawing::Size(715, 715);
 			this->DrawingField->TabIndex = 0;
 			this->DrawingField->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainWindow::DrawingField_Paint);
+			// 
+			// CalculateMaxFiguresButton
+			// 
+			this->CalculateMaxFiguresButton->BackColor = System::Drawing::Color::LightPink;
+			this->CalculateMaxFiguresButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->CalculateMaxFiguresButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
+			this->CalculateMaxFiguresButton->Location = System::Drawing::Point(736, 460);
+			this->CalculateMaxFiguresButton->Name = L"CalculateMaxFiguresButton";
+			this->CalculateMaxFiguresButton->Size = System::Drawing::Size(296, 57);
+			this->CalculateMaxFiguresButton->TabIndex = 6;
+			this->CalculateMaxFiguresButton->Text = L"Максимальна кількість фігур";
+			this->CalculateMaxFiguresButton->UseVisualStyleBackColor = false;
+			this->CalculateMaxFiguresButton->Click += gcnew System::EventHandler(this, &MainWindow::CalculateMaxFiguresButton_Click);
 			// 
 			// MainWindow
 			// 
@@ -267,6 +278,7 @@ namespace CursovaChemerysDanyloPZ23 {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(199)), static_cast<System::Int32>(static_cast<System::Byte>(36)),
 				static_cast<System::Int32>(static_cast<System::Byte>(117)));
 			this->ClientSize = System::Drawing::Size(1054, 720);
+			this->Controls->Add(this->CalculateMaxFiguresButton);
 			this->Controls->Add(this->FigureSelectComboBox);
 			this->Controls->Add(this->LoadFromFileButton);
 			this->Controls->Add(this->SaveToFileButton);
@@ -291,7 +303,11 @@ namespace CursovaChemerysDanyloPZ23 {
 
 		}
 #pragma endregion
-	//Вибір фігури за індексом з комбо бокса
+
+		/* МАЛЕНЬКІ ФУНКЦІЇ ДЛЯ ІНТЕРФЕЙСУ*/
+
+
+	//вибір фігури за індексом з комбо бокса
 	private: void SelectFigure(int index)
 	{
 		selected_index = index;
@@ -301,15 +317,12 @@ namespace CursovaChemerysDanyloPZ23 {
 			FigureSelectComboBox->SelectedIndex = 0;
 			InformationFigureTextBox->Text = L"";
 		}
-		else
-		{
-			FigureSelectComboBox->SelectedIndex = index + 2;
-			InformationFigureTextBox->Text = BuildFigureInfo(index);
-		}
+		else { FigureSelectComboBox->SelectedIndex = index + 2; }
 
 		DrawingField->Invalidate();
 	}
 
+	//перевірити чи фігура вибрана правильно
 	private: void EnsureFigureSelected()
 	{
 		if (selected_index == -1)
@@ -323,6 +336,22 @@ namespace CursovaChemerysDanyloPZ23 {
 		}
 	}
 
+	//перевірити чи є фігури на полі
+	private: void EnsureNotEmpty()
+	{
+		if (manage->getCount() == 0) {
+			throw FigureException(L"На полі немає жодної фігури!");
+		}
+	}
+
+	//вивід помилки в маленькому вікні
+	private: void ShowError(const FigureException& ex)
+	{
+		System::String^ msg = gcnew System::String(ex.GetMessage().c_str());
+		MessageBox::Show(msg, L"Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+	}
+
+	//оновити список фігур
 	private: void RefreshFigureList()
 	{
 		FigureSelectComboBox->Items->Clear();
@@ -340,13 +369,8 @@ namespace CursovaChemerysDanyloPZ23 {
 		FigureSelectComboBox->SelectedIndex = 0;
 		selected_index = -1;
 	}
-
-	private: void ShowError(const FigureException& ex)
-	{
-		System::String^ msg = gcnew System::String(ex.GetMessage().c_str());
-		MessageBox::Show(msg, L"Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	}
-
+	
+	//перетворення кирилиці в читабельний варіант(без цього будуть ????????)
 	private: System::String^ ConvertCyrillicToString(const std::string& s)
 	{
 		if (s.empty()) return System::String::Empty;
@@ -357,55 +381,22 @@ namespace CursovaChemerysDanyloPZ23 {
 
 		return System::Text::Encoding::UTF8->GetString(bytes);
 	}
-
-	private: void EnsureNotEmpty()
-	{
-		if (manage->getCount() == 0) {
-			throw FigureException(L"На полі немає жодної фігури!");
-		}
-	}
-
-	private: System::String^ BuildFigureInfo(int index)
-	{
-		Figure figure = manage->getFigure(index);
-		System::String^ nl = Environment::NewLine;
-		System::String^ managedName = ConvertCyrillicToString(figure.GetName());
-
-		System::String^ text = L"Назва: " + managedName + nl;
-		text += L"Кількість відрізків: " + figure.GetSegmentsCount().ToString() + nl;
-		text += L"Периметр: " + figure.GetPerimeter().ToString(L"F2") + nl;
-		text += L"Площа: " + figure.GetArea().ToString(L"F2") + nl;
-
-		try {
-			text += L"Площа вписаного кола: " + figure.areaOfInscribedCircle().ToString(L"F2") + nl;
-		}
-		catch (FigureException& ex) {
-			text += gcnew System::String(ex.GetMessage().c_str()) + nl;
-		}
-
-		text += L"Макс. кількість фігур із цієї к-сті відрізків: " + figure.maxFiguresBySegments().ToString() + nl;
-		text += L"Відрізки (x0; y0) - (x1; y1):" + nl;
-
-		for (int j = 0; j < figure.GetSegmentsCount(); j++) {
-			Segment s = figure.GetSegment(j);
-			PointSegment a = s.getStart();
-			PointSegment b = s.getEnd();
-			text += (j + 1).ToString() + L": (" + a.x.ToString(L"F1") + L"; " + a.y.ToString(L"F1")
-				+ L") - (" + b.x.ToString(L"F1") + L"; " + b.y.ToString(L"F1") + L")" + nl;
-		}
-		return text;
-	}
 	
-	//Поле, де будуть відображатися фігури
+
+		/* ОСНОВНИЙ ФУНКЦІОНАЛ ПРОГРАМИ */
+
+
+	//поле, де будуть відображатися фігури(тут же і малюються)
 	private: System::Void DrawingField_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 		e->Graphics->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
 
 		Pen^ pen = gcnew Pen(Color::Black, 2);
 		Pen^ selectedPen = gcnew Pen(Color::PaleVioletRed, 3);
 
-		int count = manage->getCount();
-		int fieldHeight = DrawingField->ClientSize.Height;
+		
+		float scale = DrawingField->ClientSize.Height / FIELD_SIZE;
 
+		int count = manage->getCount();
 		for (int i = 0; i < count; i++)
 		{
 			Figure figure = manage->getFigure(i);
@@ -420,17 +411,14 @@ namespace CursovaChemerysDanyloPZ23 {
 				PointSegment p1 = s.getStart();
 				PointSegment p2 = s.getEnd();
 
-				e->Graphics->DrawLine(current_pen, p1.x, fieldHeight - p1.y, p2.x, fieldHeight - p2.y);
+				e->Graphics->DrawLine(current_pen,
+					p1.x * scale, (FIELD_SIZE - p1.y) * scale,
+					p2.x * scale, (FIELD_SIZE - p2.y) * scale);
 			}
 		}
 	}
 
-	private: System::Void ClearFieldButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		manage->clearAll();
-		RefreshFigureList();
-		DrawingField->Invalidate();
-	}
-
+	//кнопка створити фігуру
 	private: System::Void CreateFigureButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		CreateFigureForm^ form = gcnew CreateFigureForm();
 		System::Windows::Forms::DialogResult result = form->ShowDialog();
@@ -452,116 +440,14 @@ namespace CursovaChemerysDanyloPZ23 {
 		delete form;
 	}
 	
-	private: System::Void CalculatePerimeterButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		try {
-			EnsureFigureSelected();
-			Figure f = manage->getFigure(selected_index);
-			InformationFigureTextBox->Text = L"Периметр фігури «"
-				+ ConvertCyrillicToString(f.GetName()) + L"»: "
-				+ f.GetPerimeter().ToString(L"F2");
-		}
-		catch (FigureException& ex) {
-			ShowError(ex);
-		}
+	//очистити поле і фігури
+	private: System::Void ClearFieldButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		manage->clearAll();
+		RefreshFigureList();
+		DrawingField->Invalidate();
 	}
 
-	private: System::Void CalculcateCircleAreaButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		try {
-			EnsureFigureSelected();
-			Figure f = manage->getFigure(selected_index);
-			InformationFigureTextBox->Text = L"Площа вписаного кола фігури «"
-				+ ConvertCyrillicToString(f.GetName()) + L"»: "
-				+ f.areaOfInscribedCircle().ToString(L"F2");
-		}
-		catch (FigureException& ex) {
-			ShowError(ex);
-		}
-	}
-
-	private: System::Void LargestAreaButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		try {
-			EnsureNotEmpty();
-			int index = manage->findLargestAreaWithFewestSegments();
-			SelectFigure(index);
-			InformationFigureTextBox->Text = L"Найбільша площа (серед таких - найменше відрізків):"
-				+ Environment::NewLine + InformationFigureTextBox->Text;
-		}
-		catch (FigureException& ex) {
-			ShowError(ex);
-		}
-	}
-
-	private: System::Void SortFiguresButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		try {
-			EnsureNotEmpty();
-			manage->sortByPerimeter();
-			SelectFigure(-1);   // порядок змінився - старий індекс більше недійсний
-
-			System::String^ text = L"Фігури за зростанням периметра:" + Environment::NewLine;
-			for (int i = 0; i < manage->getCount(); i++) {
-				Figure f = manage->getFigure(i);
-				text += (i + 1).ToString() + L". "
-					+ ConvertCyrillicToString(f.GetName())
-					+ L" - P = " + f.GetPerimeter().ToString(L"F2") + Environment::NewLine;
-			}
-			InformationFigureTextBox->Text = text;
-		}
-		catch (FigureException& ex) {
-			ShowError(ex);
-		}
-	}
-	
-	private: System::Void ScaleFigureButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		try {
-			EnsureFigureSelected();
-
-			EnterScaleWindow^ dialog = gcnew EnterScaleWindow();
-			if (dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-				manage->scaleFigure(selected_index, dialog->getFactor());
-				SelectFigure(selected_index);   // оновити малюнок і інформацію
-			}
-			delete dialog;
-		}
-		catch (FigureException& ex) {
-			ShowError(ex);
-		}
-	}
-
-	private: System::Void SaveToFileButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		SaveFileDialog^ dialog = gcnew SaveFileDialog();
-		dialog->Filter = L"Текстові файли (*.txt)|*.txt|Усі файли (*.*)|*.*";
-
-		if (dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			try {
-				manage->saveToFile(msclr::interop::marshal_as<std::wstring>(dialog->FileName));
-				MessageBox::Show(L"Фігури збережено.", L"Готово", MessageBoxButtons::OK, MessageBoxIcon::Information);
-			}
-			catch (FigureException& ex) {
-				ShowError(ex);
-			}
-		}
-		delete dialog;
-	}
-
-	private: System::Void LoadFromFileButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		OpenFileDialog^ dialog = gcnew OpenFileDialog();
-		dialog->Filter = L"Текстові файли (*.txt)|*.txt|Усі файли (*.*)|*.*";
-
-		if (dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			try {
-				manage->loadFromFile(msclr::interop::marshal_as<std::wstring>(dialog->FileName));
-				SelectFigure(-1);
-			}
-			catch (FigureException& ex) {
-				ShowError(ex);
-			}
-		}
-		delete dialog;
-	}
-
-	private: System::Void InformationFigureTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	}
-
+	//вибір фігур з випадаючого списку
 	private: System::Void FigureSelectComboBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 		int combo = FigureSelectComboBox->SelectedIndex;
 
@@ -579,6 +465,142 @@ namespace CursovaChemerysDanyloPZ23 {
 		}
 
 		DrawingField->Invalidate();
+	}
+
+	//кнопка порахувати периметр
+	private: System::Void CalculatePerimeterButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		try {
+			EnsureFigureSelected();
+			Figure f = manage->getFigure(selected_index);
+			InformationFigureTextBox->Text = L"Периметр фігури «"
+				+ ConvertCyrillicToString(f.GetName()) + L"»: "
+				+ f.GetPerimeter().ToString(L"F2");
+		}
+		catch (FigureException& ex) {
+			ShowError(ex);
+		}
+	}
+
+	//кнопка порахувати площу впис. кола у фігуру
+	private: System::Void CalculcateCircleAreaButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		try {
+			EnsureFigureSelected();
+			Figure f = manage->getFigure(selected_index);
+			InformationFigureTextBox->Text = L"Площа вписаного кола фігури «"
+				+ ConvertCyrillicToString(f.GetName()) + L"»: "
+				+ f.areaOfInscribedCircle().ToString(L"F2");
+		}
+		catch (FigureException& ex) {
+			ShowError(ex);
+		}
+	}
+
+	//кнопка для обрахунку макс. к-ті фігур з відрізків
+	private: System::Void CalculateMaxFiguresButton_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		try {
+			EnsureFigureSelected();
+			Figure f = manage->getFigure(selected_index);
+
+			InformationFigureTextBox->Text = L"Максимальна кількість фігурі з заданої кількості відрізків «"
+				+ ConvertCyrillicToString(f.GetName()) + L"»: "
+				+ f.maxFiguresBySegments().ToString(L"F2");
+		}
+		catch (FigureException& ex) {
+			ShowError(ex);
+		}
+	}
+
+	//кнопка для найбільшої площі з найменшою к-тю відрізків
+	private: System::Void LargestAreaButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		try {
+			InformationFigureTextBox->Clear();
+			EnsureNotEmpty();
+			int index = manage->findLargestAreaWithFewestSegments();
+			SelectFigure(index);
+			Figure f = manage->getFigure(index);
+			InformationFigureTextBox->Text = "Фігура з найбільшою площею і найменшою кількістю відрізків:\n" +
+				"Назва: " + ConvertCyrillicToString(f.GetName()) +
+				"\nПлоща фігури: " + f.GetArea().ToString() +
+				"\nКількість відрізків: " + f.GetSegmentsCount().ToString();
+		}
+		catch (FigureException& ex) {
+			ShowError(ex);
+		}
+	}
+
+	//кнопка для сортування фігур за значенням периметра
+	private: System::Void SortFiguresButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		try {
+			InformationFigureTextBox->Clear();
+			EnsureNotEmpty();
+			manage->sortByPerimeter();
+			RefreshFigureList();
+			
+			InformationFigureTextBox->Text = L"Фігури за зростанням периметра:\n";
+			for (int i = 0; i < manage->getCount(); i++) {
+				Figure f = manage->getFigure(i);
+				InformationFigureTextBox->Text += (i + 1).ToString() + L". "
+					+ ConvertCyrillicToString(f.GetName())
+					+ L" - P = \n" + f.GetPerimeter().ToString(L"F2");
+			}
+		}
+		catch (FigureException& ex) {
+			ShowError(ex);
+		}
+	}
+	
+	//кнопка для масштабування фігури
+	private: System::Void ScaleFigureButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		try {
+			EnsureFigureSelected();
+
+			EnterScaleWindow^ dialog = gcnew EnterScaleWindow();
+			if (dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				manage->scaleFigure(selected_index, dialog->getFactor());
+				SelectFigure(selected_index);   // оновити малюнок і інформацію
+			}
+			delete dialog;
+		}
+		catch (FigureException& ex) {
+			ShowError(ex);
+		}
+	}
+
+	//кнопка для збереження фігур до файлу
+	private: System::Void SaveToFileButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		SaveFileDialog^ dialog = gcnew SaveFileDialog();
+		dialog->Filter = L"Текстові файли (*.txt)|*.txt|Усі файли (*.*)|*.*";
+
+		if (dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+			try {
+				manage->saveToFile(msclr::interop::marshal_as<std::wstring>(dialog->FileName));
+				MessageBox::Show(L"Фігури збережено.", L"Готово", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			}
+			catch (FigureException& ex) {
+				ShowError(ex);
+			}
+		}
+		delete dialog;
+	}
+
+	//кнопка для завантаження фігур з файлу
+	private: System::Void LoadFromFileButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		OpenFileDialog^ dialog = gcnew OpenFileDialog();
+		dialog->Filter = L"Текстові файли (*.txt)|*.txt|Усі файли (*.*)|*.*";
+
+		if (dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+			try {
+				manage->loadFromFile(msclr::interop::marshal_as<std::wstring>(dialog->FileName));
+				RefreshFigureList();
+				DrawingField->Invalidate();
+				InformationFigureTextBox->Clear();
+			}
+			catch (FigureException& ex) {
+				ShowError(ex);
+			}
+		}
+		delete dialog;
 	}
 };
 }

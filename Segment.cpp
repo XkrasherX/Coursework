@@ -46,7 +46,7 @@ float Segment::getLength() const
 	return sqrt((x * x) + (y * y));
 }
 
-//масштабування фігури відносно центру фігури
+//масштабування точки відрізка відносно центру фігури
 void Segment::scaling(PointSegment center, float factor)
 {
 	start.x = center.x + (start.x - center.x) * factor;

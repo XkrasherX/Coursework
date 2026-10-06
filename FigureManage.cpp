@@ -49,7 +49,7 @@ void FigureManage::sortByPerimeter()
 
 }
 
-//знайти найбільшу площу з найменшою кількістю відрізків
+//повертає індекс на найбільшу площу з найменшою кількістю відрізків
 int FigureManage::findLargestAreaWithFewestSegments() const
 {
     if (figures.empty())
