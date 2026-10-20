@@ -125,7 +125,7 @@ Select a figure, click **Scale**, choose a factor from 0.1 to 10 (step 0.1) and 
 
 ## 📄 Input file format
 
-Plain text, UTF-8 **without BOM**. An example is in [`examples/figures.txt`](examples/figures.txt).
+Plain text, UTF-8 **without BOM**. An example is in [`/figures.txt`](figures.txt).
 
 ```text
 <number of figures>
@@ -270,7 +270,7 @@ classDiagram
 1. Install **Visual Studio 2022** with the workloads **Desktop development with C++** and **.NET desktop development**, plus the component **C++/CLI support for v143 build tools**.
 2. Clone the repository:
    ```bash
-   git clone https://github.com/XkrasherX/<repository-name>.git
+   git clone https://github.com/XkrasherX/Coursework.git
    ```
 3. Open the `.sln` file in Visual Studio.
 4. Choose **x64** and **Debug** or **Release**, then press `F5`.
