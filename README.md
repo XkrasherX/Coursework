@@ -69,7 +69,7 @@ Actions on one figure (perimeter, inscribed circle, max figures, scale) need a s
 3. In the second window enter `X0 Y0 X1 Y1` for every segment and click **Create figure**. **Cancel** returns to the first window.
 
 <p align="center">
-  <img src="assets/create-figure.gif" width="650" alt="Create figure demo"/>
+  <img src="create_figure.png" width="650" alt="Create figure demo"/>
 </p>
 
 **Rules for coordinates**
@@ -86,12 +86,16 @@ Actions on one figure (perimeter, inscribed circle, max figures, scale) need a s
 | 3 | 500 | 500 | 500 | 250 |
 | 4 | 500 | 250 | 250 | 250 |
 
+<p align="center">
+  <img src="enter_coorditanes.png" width="650" alt="Create figure demo"/>
+</p>
+
 ### 2️⃣ Select a figure and calculate
 
 Pick a figure in the selector, then click **Perimeter**, **Inscribed circle** or **Max figures**. The result appears in the output box and the figure is highlighted on the field.
 
 <p align="center">
-  <img src="assets/calculate.gif" width="650" alt="Calculate demo"/>
+  <img src="calculate.png" width="650" alt="Calculate demo"/>
 </p>
 
 ### 3️⃣ Largest area and sorting
@@ -102,7 +106,7 @@ Select **Усі**, then:
 - **Sort** orders the figures by perimeter, ascending, and prints the sorted list.
 
 <p align="center">
-  <img src="assets/sort-and-largest.gif" width="650" alt="Largest area and sort demo"/>
+  <img src="sort.png" width="650" alt="Largest area and sort demo"/>
 </p>
 
 ### 4️⃣ Scale a figure
@@ -110,7 +114,7 @@ Select **Усі**, then:
 Select a figure, click **Scale**, choose a factor from 0.1 to 10 (step 0.1) and click **Save**. The figure grows or shrinks relative to its center. If it would leave the field, the change is rejected and the figure stays as it was.
 
 <p align="center">
-  <img src="assets/scale.gif" width="650" alt="Scale demo"/>
+  <img src="scale.png" width="650" alt="Scale demo"/>
 </p>
 
 ### 5️⃣ Save and load
@@ -118,7 +122,7 @@ Select a figure, click **Scale**, choose a factor from 0.1 to 10 (step 0.1) and 
 **Save** writes all figures to a text file. **Load** reads a file in the format below and replaces the current figures. A file is accepted only if every figure in it is valid; otherwise nothing changes.
 
 <p align="center">
-  <img src="assets/save-load.gif" width="650" alt="Save and load demo"/>
+  <img src="save.png" width="650" alt="Save and load demo"/>
 </p>
 
 ---
