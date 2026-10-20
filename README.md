@@ -117,6 +117,10 @@ Select a figure, click **Scale**, choose a factor from 0.1 to 10 (step 0.1) and 
   <img src="scale.png" width="650" alt="Scale demo"/>
 </p>
 
+<p align="center">
+  <img src="after_scale.png" width="650" alt="Scale demo"/>
+</p>
+
 ### 5️⃣ Save and load
 
 **Save** writes all figures to a text file. **Load** reads a file in the format below and replaces the current figures. A file is accepted only if every figure in it is valid; otherwise nothing changes.
