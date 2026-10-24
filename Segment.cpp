@@ -1,4 +1,4 @@
-#include "Segment.h"
+﻿#include "Segment.h"
 #include <cmath>
 
 //конструктор за замовчуванням. Початкові координати = 0

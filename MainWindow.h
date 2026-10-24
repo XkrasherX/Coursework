@@ -1,4 +1,4 @@
-//Головне вікно програми
+﻿//ГОЛОВНЕ ВІКНО ПРОГРАМИ
 
 #pragma once
 #include <string>
@@ -327,12 +327,18 @@ namespace CursovaChemerysDanyloPZ23 {
 	{
 		if (selected_index == -1)
 		{
-			throw FigureException(L"Спочатку виберіть фігуру зі списку.");
+			throw FigureException("Спочатку виберіть фігуру зі списку.");
 		}
 
 		if (selected_index == -2)
 		{
-			throw FigureException(L"Ця дія працює лише з однією конкретною фігурою, а не з «Усі».");
+			throw FigureException("Ця дія працює лише з однією конкретною фігурою, а не з «Усі».");
+		}
+	}
+
+	private: void EnsureAllFigureSelected() {
+		if (selected_index != -2) {
+			throw FigureException("Ця дія працює лише з усіма фігурами!");
 		}
 	}
 
@@ -340,15 +346,21 @@ namespace CursovaChemerysDanyloPZ23 {
 	private: void EnsureNotEmpty()
 	{
 		if (manage->getCount() == 0) {
-			throw FigureException(L"На полі немає жодної фігури!");
+			throw FigureException("На полі немає жодної фігури!");
 		}
 	}
+	//перетворення звичайного string в String^ (для виводу кирилиці) UTF-8 -> UTF-16
+	private:   System::String^ StdStringToUTF16(const std::string& s) {
+			   if (s.empty()) return gcnew System::String("");
+			   array<unsigned char>^ bytes = gcnew array<unsigned char>(static_cast<int>(s.size()));
+			   for (int i = 0; i < (int)s.size(); ++i) bytes[i] = (unsigned char)s[i];
+			   return System::Text::Encoding::UTF8->GetString(bytes);
+		   }
 
 	//вивід помилки в маленькому вікні
 	private: void ShowError(const FigureException& ex)
 	{
-		System::String^ msg = gcnew System::String(ex.GetMessage().c_str());
-		MessageBox::Show(msg, L"Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		MessageBox::Show(StdStringToUTF16(ex.GetMessage()), L"Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 
 	//оновити список фігур
@@ -443,8 +455,8 @@ namespace CursovaChemerysDanyloPZ23 {
 	//очистити поле і фігури
 	private: System::Void ClearFieldButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		manage->clearAll();
-		RefreshFigureList();
 		DrawingField->Invalidate();
+		RefreshFigureList();
 	}
 
 	//вибір фігур з випадаючого списку
@@ -472,9 +484,9 @@ namespace CursovaChemerysDanyloPZ23 {
 		try {
 			EnsureFigureSelected();
 			Figure f = manage->getFigure(selected_index);
-			InformationFigureTextBox->Text = L"Периметр фігури «"
-				+ ConvertCyrillicToString(f.GetName()) + L"»: "
-				+ f.GetPerimeter().ToString(L"F2");
+			InformationFigureTextBox->Text = "Периметр фігури " + Environment::NewLine + 
+				"Назва: " + ConvertCyrillicToString(f.GetName()) + Environment::NewLine +
+				"Периметр: " + f.GetPerimeter().ToString();
 		}
 		catch (FigureException& ex) {
 			ShowError(ex);
@@ -486,9 +498,9 @@ namespace CursovaChemerysDanyloPZ23 {
 		try {
 			EnsureFigureSelected();
 			Figure f = manage->getFigure(selected_index);
-			InformationFigureTextBox->Text = L"Площа вписаного кола фігури «"
-				+ ConvertCyrillicToString(f.GetName()) + L"»: "
-				+ f.areaOfInscribedCircle().ToString(L"F2");
+			InformationFigureTextBox->Text = "Площа вписаного кола у фігуру " + Environment::NewLine + 
+				"Назва: " + ConvertCyrillicToString(f.GetName()) + Environment::NewLine +
+				"Площа вписаного кола у фігуру: " + f.areaOfInscribedCircle().ToString();
 		}
 		catch (FigureException& ex) {
 			ShowError(ex);
@@ -502,9 +514,10 @@ namespace CursovaChemerysDanyloPZ23 {
 			EnsureFigureSelected();
 			Figure f = manage->getFigure(selected_index);
 
-			InformationFigureTextBox->Text = L"Максимальна кількість фігурі з заданої кількості відрізків «"
-				+ ConvertCyrillicToString(f.GetName()) + L"»: "
-				+ f.maxFiguresBySegments().ToString(L"F2");
+			InformationFigureTextBox->Text = "Максимальна кількість фігур з заданої кількості відрізків" + Environment::NewLine +
+				"Назва: " + ConvertCyrillicToString(f.GetName()) + Environment::NewLine +
+				"Кількість відрізків: " + f.GetSegmentsCount().ToString() + Environment::NewLine +
+				"Максимальна кількість фігур: " + f.maxFiguresBySegments().ToString();
 		}
 		catch (FigureException& ex) {
 			ShowError(ex);
@@ -516,13 +529,14 @@ namespace CursovaChemerysDanyloPZ23 {
 		try {
 			InformationFigureTextBox->Clear();
 			EnsureNotEmpty();
+			EnsureAllFigureSelected();
 			int index = manage->findLargestAreaWithFewestSegments();
 			SelectFigure(index);
 			Figure f = manage->getFigure(index);
-			InformationFigureTextBox->Text = "Фігура з найбільшою площею і найменшою кількістю відрізків:\n" +
-				"Назва: " + ConvertCyrillicToString(f.GetName()) +
-				"\nПлоща фігури: " + f.GetArea().ToString() +
-				"\nКількість відрізків: " + f.GetSegmentsCount().ToString();
+			InformationFigureTextBox->Text = "Фігура з найбільшою площею і найменшою кількістю відрізків: " + Environment::NewLine +
+				"Назва: " + ConvertCyrillicToString(f.GetName()) + Environment::NewLine +
+				"Площа фігури: " + f.GetArea().ToString() + Environment::NewLine +
+				"Кількість відрізків: " + f.GetSegmentsCount().ToString();
 		}
 		catch (FigureException& ex) {
 			ShowError(ex);
@@ -534,15 +548,16 @@ namespace CursovaChemerysDanyloPZ23 {
 		try {
 			InformationFigureTextBox->Clear();
 			EnsureNotEmpty();
+			EnsureAllFigureSelected();
 			manage->sortByPerimeter();
 			RefreshFigureList();
 			
-			InformationFigureTextBox->Text = L"Фігури за зростанням периметра:\n";
+			InformationFigureTextBox->Text = "Фігури за зростанням периметра: " + Environment::NewLine ;
 			for (int i = 0; i < manage->getCount(); i++) {
 				Figure f = manage->getFigure(i);
-				InformationFigureTextBox->Text += (i + 1).ToString() + L". "
+				InformationFigureTextBox->Text += (i + 1).ToString() + ". "
 					+ ConvertCyrillicToString(f.GetName())
-					+ L" - P = \n" + f.GetPerimeter().ToString(L"F2");
+					+ " - Периметр = " + f.GetPerimeter().ToString() + " " + Environment::NewLine ;
 			}
 		}
 		catch (FigureException& ex) {
@@ -553,8 +568,8 @@ namespace CursovaChemerysDanyloPZ23 {
 	//кнопка для масштабування фігури
 	private: System::Void ScaleFigureButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		try {
+			InformationFigureTextBox->Clear();
 			EnsureFigureSelected();
-
 			EnterScaleWindow^ dialog = gcnew EnterScaleWindow();
 			if (dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 				manage->scaleFigure(selected_index, dialog->getFactor());
@@ -574,7 +589,7 @@ namespace CursovaChemerysDanyloPZ23 {
 
 		if (dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 			try {
-				manage->saveToFile(msclr::interop::marshal_as<std::wstring>(dialog->FileName));
+				manage->saveToFile(msclr::interop::marshal_as<std::string>(dialog->FileName));
 				MessageBox::Show(L"Фігури збережено.", L"Готово", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			}
 			catch (FigureException& ex) {
@@ -591,7 +606,7 @@ namespace CursovaChemerysDanyloPZ23 {
 
 		if (dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 			try {
-				manage->loadFromFile(msclr::interop::marshal_as<std::wstring>(dialog->FileName));
+				manage->loadFromFile(msclr::interop::marshal_as<std::string>(dialog->FileName));
 				RefreshFigureList();
 				DrawingField->Invalidate();
 				InformationFigureTextBox->Clear();

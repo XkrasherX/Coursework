@@ -1,18 +1,18 @@
-#pragma once
+﻿#pragma once
 #include <string>
 
 //клас для обробки винятків
 
 class FigureException {
 private:
-	std::wstring message;
+	std::string message;
 
 public:
 	//конструктор з параметрами
-	FigureException(const std::wstring& msg) : message(msg) {}
+	FigureException(const std::string& msg) : message(msg) {}
 
 	//вивід помилки
-	std::wstring GetMessage() const {
+	std::string GetMessage() const {
 		return message;
 	}
 };

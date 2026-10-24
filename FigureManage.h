@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <vector>
 #include <string>
 #include "Figure.h"
@@ -30,7 +30,7 @@ public:
 	void scaleFigure(int index, double factor);
 
 	//зберегти/завантажити з файлу
-	void saveToFile(const std::wstring& path) const;
-	void loadFromFile(const std::wstring& path);
+	void saveToFile(const std::string& path) const;
+	void loadFromFile(const std::string& path);
 };
 

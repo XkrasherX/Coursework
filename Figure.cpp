@@ -1,4 +1,4 @@
-#include <cmath>
+﻿#include <cmath>
 #include <vector>
 #include <string>
 
@@ -29,12 +29,12 @@ Figure::Figure()
 Figure::Figure(const std::string& figure_name, Segment* arr_segment, int count)
 {
     if (count < 3) {
-        throw FigureException(L"Фігура повинна складатися принаймі з 3 відрізків!");
+        throw FigureException("Фігура повинна складатися принаймі з 3 відрізків!");
     }
 
     for (int i = 0; i < count; i++) {
         if (!pointInField(arr_segment[i].getStart()) || !pointInField(arr_segment[i].getEnd())) {
-            throw FigureException(L"Координати повині лежати в межах від 0 до 715!");
+            throw FigureException("Координати повині лежати в межах від 0 до 715!");
         }
     }
 
@@ -42,9 +42,9 @@ Figure::Figure(const std::string& figure_name, Segment* arr_segment, int count)
         PointSegment end = arr_segment[i].getEnd();
         PointSegment next_start = arr_segment[(i + 1) % count].getStart();
         if (fabs(end.x - next_start.x) > CLOSE_OFFSET || fabs(end.y - next_start.y) > CLOSE_OFFSET) {
-            throw FigureException(L"Відрізки не утворюють замкнений контур: кінець відрізка №"
-                + std::to_wstring(i + 1) + L" має збігатися з початком відрізка №"
-                + std::to_wstring((i + 1) % count + 1) + L"!");
+            throw FigureException("Відрізки не утворюють замкнений контур: кінець відрізка №"
+                + std::to_string(i + 1) + " має збігатися з початком відрізка №"
+                + std::to_string((i + 1) % count + 1) + "!");
         }
     }
 
@@ -115,7 +115,7 @@ int Figure::GetSegmentsCount() const { return segments_count; }
 Segment Figure::GetSegment(int index) const
 {
     if (index < 0 || index >= segments_count) {
-        throw FigureException(L"Відрізка з таким індексом не існує!");
+        throw FigureException("Відрізка з таким індексом не існує!");
     }
     return segments[index];
 }
@@ -137,7 +137,7 @@ int Figure::maxFiguresBySegments() const
 double Figure::areaOfInscribedCircle() const
 {
     if (perimeter == 0) {
-        throw FigureException(L"Неможливо обчислити площу вписано кола, периметр фігури дорівнює 0!");
+        throw FigureException("Неможливо обчислити площу вписано кола, периметр фігури дорівнює 0!");
     }
     double radius = (2.0 * area) / perimeter;
     return radius * radius * PI;

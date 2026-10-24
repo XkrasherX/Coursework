@@ -1,4 +1,4 @@
-//Вікно для вводу коефіцієнта масштабування фігури
+﻿//Вікно для вводу коефіцієнта масштабування фігури
 #pragma once
 #include "FigureException.h"
 
@@ -115,7 +115,7 @@ namespace CursovaChemerysDanyloPZ23 {
 				static_cast<System::Byte>(204)));
 			this->CancelButton2->Location = System::Drawing::Point(250, 97);
 			this->CancelButton2->Name = L"CancelButton2";
-			this->CancelButton2->Size = System::Drawing::Size(146, 51);
+			this->CancelButton2->Size = System::Drawing::Size(165, 51);
 			this->CancelButton2->TabIndex = 2;
 			this->CancelButton2->Text = L"Скасувати";
 			this->CancelButton2->UseVisualStyleBackColor = false;
@@ -155,12 +155,12 @@ namespace CursovaChemerysDanyloPZ23 {
 
 			if (!ok)
 			{
-				throw FigureException(L"Коефіцієнт масштабування має бути числом.");
+				throw FigureException("Коефіцієнт масштабування має бути числом.");
 			}
 
 			if (value <= 0)
 			{
-				throw FigureException(L"Коефіцієнт масштабування має бути додатним числом.");
+				throw FigureException("Коефіцієнт масштабування має бути додатним числом.");
 			}
 
 			factor = value;
@@ -171,7 +171,7 @@ namespace CursovaChemerysDanyloPZ23 {
 		catch (FigureException& ex)
 		{
 			System::String^ msg = gcnew System::String(ex.GetMessage().c_str());
-			MessageBox::Show(msg, L"Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			MessageBox::Show(msg, "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
 	}
 	

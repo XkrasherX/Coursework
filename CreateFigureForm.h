@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "FigureException.h"
 #include "EnterCoordinatesWindow.h"
 
@@ -182,7 +182,7 @@ namespace CursovaChemerysDanyloPZ23 {
 
 			if (enteredName->Length == 0)
 			{
-				throw FigureException(L"Введіть назву фігури.");
+				throw FigureException("Введіть назву фігури.");
 			}
 
 			int count;
@@ -190,12 +190,12 @@ namespace CursovaChemerysDanyloPZ23 {
 
 			if (!isNumber)
 			{
-				throw FigureException(L"Кількість відрізків має бути цілим числом.");
+				throw FigureException("Кількість відрізків має бути цілим числом.");
 			}
 
 			if (count < 3)
 			{
-				throw FigureException(L"Фігура повинна складатися щонайменше з 3 відрізків.");
+				throw FigureException("Фігура повинна складатися щонайменше з 3 відрізків.");
 			}
 
 			EnterCoordinatesWindow^ coordsForm = gcnew EnterCoordinatesWindow(enteredName, count);
@@ -214,7 +214,7 @@ namespace CursovaChemerysDanyloPZ23 {
 		catch (FigureException& ex)
 		{
 			System::String^ msg = gcnew System::String(ex.GetMessage().c_str());
-			MessageBox::Show(msg, L"Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			MessageBox::Show(msg, "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
 	}
 };

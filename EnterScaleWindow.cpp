@@ -1,2 +1,2 @@
-#include "EnterScaleWindow.h"
+﻿#include "EnterScaleWindow.h"
 

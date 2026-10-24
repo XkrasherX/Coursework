@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 /*
 це вікно не створюється через WindowsForm, 
@@ -201,7 +201,7 @@ private:
 
         if (!ok)
         {
-            throw FigureException(L"Координата повинна бути числом.");
+            throw FigureException("Координата повинна бути числом.");
         }
         return value;
     }
@@ -244,7 +244,7 @@ private:
         catch (FigureException& ex)
         {
             System::String^ msg = gcnew System::String(ex.GetMessage().c_str());
-            MessageBox::Show(msg, L"Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+            MessageBox::Show(msg, "Помилка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 
         }
     }

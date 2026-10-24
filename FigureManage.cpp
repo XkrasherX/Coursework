@@ -1,4 +1,4 @@
-#include <cmath>
+﻿#include <cmath>
 #include <fstream>
 #include "FigureManage.h"
 #include "FigureException.h"
@@ -18,7 +18,7 @@ int FigureManage::getCount() const { return (int)figures.size(); }
 Figure FigureManage::getFigure(int index) const
 {
     if (index < 0 || index >= figures.size()) {
-        throw FigureException(L"Фігури з таким індексом не існує!");
+        throw FigureException("Фігури з таким індексом не існує!");
     }
 	return figures[index];
 }
@@ -54,7 +54,7 @@ int FigureManage::findLargestAreaWithFewestSegments() const
 {
     if (figures.empty())
     {
-        throw FigureException(L"Список фігур порожній");
+        throw FigureException("Список фігур порожній");
     }
     int n = figures.size();
 
@@ -88,27 +88,27 @@ int FigureManage::findLargestAreaWithFewestSegments() const
 void FigureManage::scaleFigure(int index, double factor)
 {
     if (index < 0 || index >= figures.size()) {
-        throw FigureException(L"Фігури з таким індексом не існує!");
+        throw FigureException("Фігури з таким індексом не існує!");
     }
 
     if (!(factor > 0)) {
-        throw FigureException(L"Коефіцієнт масштабування має бути більшим за 0!");
+        throw FigureException("Коефіцієнт масштабування має бути більшим за 0!");
     }
     Figure copy = figures[index];
     copy.scale(factor);
 
     if (!copy.isInsideField()) {
-        throw FigureException(L"Після масштабування фігура вийшла б за межі поля (0..715)!");
+        throw FigureException("Після масштабування фігура вийшла б за межі поля (0..715)!");
     }
     figures[index] = copy;
 }
 
 //зберегти у файл
-void FigureManage::saveToFile(const std::wstring& path) const
+void FigureManage::saveToFile(const std::string& path) const
 {
     std::ofstream out(path);
 	if (!out) {
-		throw FigureException(L"Не вдалося відкрити файл для запису!");
+		throw FigureException("Не вдалося відкрити файл для запису!");
 	}
 
 	out << figures.size() << std::endl;
@@ -117,28 +117,28 @@ void FigureManage::saveToFile(const std::wstring& path) const
 	}
 
 	if (!out) {
-		throw FigureException(L"Помилка під час запису у файл!");
+		throw FigureException("Помилка під час запису у файл!");
 	}
 }
 
 //завантажити з файлу
-void FigureManage::loadFromFile(const std::wstring& path)
+void FigureManage::loadFromFile(const std::string& path)
 {
     std::ifstream in(path);
     if (!in) {
-        throw FigureException(L"Не вдалося відкрити файл для читання!");
+        throw FigureException("Не вдалося відкрити файл для читання!");
     }
 
     int n;
     if (!(in >> n) || n < 0) {
-        throw FigureException(L"Файл має неправильний формат!");
+        throw FigureException("Файл має неправильний формат!");
     }
 
     std::vector<Figure> loaded;
     for (int i = 0; i < n; i++) {
         Figure f;
         if (!(in >> f)) {
-            throw FigureException(L"Файл пошкоджений або містить некоректну фігуру!");
+            throw FigureException("Файл пошкоджений або містить некоректну фігуру!");
         }
         loaded.push_back(f);
     }
