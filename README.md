@@ -10,7 +10,6 @@
 
 <p align="center">
   <img src="Main_Window.png" width="800" alt="Main window"/>
-  <img src="assets/main-window.png" width="800" alt="Main window"/>
 </p>
 
 ---
