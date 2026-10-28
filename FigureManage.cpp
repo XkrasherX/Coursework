@@ -3,7 +3,8 @@
 #include "FigureManage.h"
 #include "FigureException.h"
 
-const double EPS = 1e-9;
+//похибка у площі фігури
+const double EPS = 1e-6;
 
 //додати фігуру до списку усіх фігур
 void FigureManage::addFigureToList(const Figure& figure) { figures.push_back(figure); }
@@ -30,6 +31,7 @@ void FigureManage::sortByPerimeter()
 
     for (int i = 0; i < n - 1; i++)
     {
+        //пошук мінімального елемента
         int min_index = i;
         for (int j = i + 1; j < n; j++)
         {
@@ -39,6 +41,7 @@ void FigureManage::sortByPerimeter()
             }
         }
 
+        //міняємо місця мін. елемент з елементом[i]
         if (min_index != i)
         {
             Figure temp = figures[i];
@@ -73,6 +76,7 @@ int FigureManage::findLargestAreaWithFewestSegments() const
     bool is_found = false;
     for (int i = 0; i < n; i++)
     {
+        //порівнюємо площі фігури + похибка
         bool same_area = fabs(figures[i].GetArea() - max_area) < EPS;
         if (same_area && (!is_found || figures[i].GetSegmentsCount() < figures[best_index].GetSegmentsCount()))
         {

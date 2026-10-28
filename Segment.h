@@ -31,7 +31,7 @@ public:
 	//довжина відрізка
 	float getLength() const;
 
-	//зміна масштабу фігури на коефіцієнт factor
+	//зміна масштабу відрізка на коефіцієнт factor
 	void scaling(PointSegment center, float factor);
 
 	//перевантажені оператори вводу і виводу

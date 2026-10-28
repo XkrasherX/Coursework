@@ -134,8 +134,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CreateFigureForm.cpp" />
-    <ClCompile Include="EnterScaleWindow.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="FigureManage.cpp" />
     <ClCompile Include="MainWindow.cpp" />

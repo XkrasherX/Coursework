@@ -8,6 +8,7 @@
 #include "CreateFigureForm.h"
 #include "EnterScaleWindow.h"
 
+//розмір поля
 const float FIELD_SIZE = 715.0f;
 
 namespace CursovaChemerysDanyloPZ23 {
@@ -47,8 +48,10 @@ namespace CursovaChemerysDanyloPZ23 {
 				delete components;
 			}
 		}
+	//змінна для керування фігурами
 	private: FigureManage* manage;
 
+	//зміна для отримання індекса фігури зі списку
 	private: int selected_index; 
 	protected:
 
@@ -322,7 +325,7 @@ namespace CursovaChemerysDanyloPZ23 {
 		DrawingField->Invalidate();
 	}
 
-	//перевірити чи фігура вибрана правильно
+	//перевірити чи фігура вибрана
 	private: void EnsureFigureSelected()
 	{
 		if (selected_index == -1)
@@ -349,13 +352,14 @@ namespace CursovaChemerysDanyloPZ23 {
 			throw FigureException("На полі немає жодної фігури!");
 		}
 	}
+
 	//перетворення звичайного string в String^ (для виводу кирилиці) UTF-8 -> UTF-16
 	private:   System::String^ StdStringToUTF16(const std::string& s) {
-			   if (s.empty()) return gcnew System::String("");
-			   array<unsigned char>^ bytes = gcnew array<unsigned char>(static_cast<int>(s.size()));
-			   for (int i = 0; i < (int)s.size(); ++i) bytes[i] = (unsigned char)s[i];
-			   return System::Text::Encoding::UTF8->GetString(bytes);
-		   }
+		if (s.empty()) return gcnew System::String("");
+		array<unsigned char>^ bytes = gcnew array<unsigned char>(static_cast<int>(s.size()));
+		for (int i = 0; i < (int)s.size(); ++i) bytes[i] = (unsigned char)s[i];
+		return System::Text::Encoding::UTF8->GetString(bytes);
+	}
 
 	//вивід помилки в маленькому вікні
 	private: void ShowError(const FigureException& ex)
@@ -465,7 +469,7 @@ namespace CursovaChemerysDanyloPZ23 {
 
 		if (combo <= 0)
 		{
-			selected_index = -1;  // плейсхолдер
+			selected_index = -1;  // -Виберіть фігуру зі списку-
 		}
 		else if (combo == 1)
 		{

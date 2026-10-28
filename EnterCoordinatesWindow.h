@@ -4,7 +4,8 @@
 це вікно не створюється через WindowsForm, 
 бо наперед невідомо скільки відрізків буде у фігури.
 У вікні CreateFigureWindow спочатку вказується назва і к-ть відрізків,
-а вже тут створюється необхідна кількість текстбоксів для введення координат кожного відрізку
+а вже тут створюється необхідна кількість текстбоксів для введення
+координат кожного відрізку
 */
 
 #include "Figure.h"
@@ -60,7 +61,7 @@ private:
     //функція для побудови рядків і стовпців
     void BuildRows()
     {
-        //параметри елементів
+
         const int margin = 10; // зовнішній відступ
         const int gap = 8; //відстань між елементами
         const int rowHeight = 23; //висота рядка
@@ -69,7 +70,7 @@ private:
         const int buttonWidth = 140; //ширина кнопки
         const int buttonHeight = 30; //висота кнопки
 
-        //створюємо масиви для коодинаь
+        //створюємо масиви для коодинат
         x0Boxes = gcnew array<TextBox^>(rowCount);
         y0Boxes = gcnew array<TextBox^>(rowCount);
         x1Boxes = gcnew array<TextBox^>(rowCount);
@@ -85,6 +86,8 @@ private:
             L"Y1" };
 
         int headerX = margin + labelWidth + gap;
+
+        //створення заголовків x0 y0 x1 y1
         for (int i = 0; i < 4; i++)
         {
             Label^ header = gcnew Label();
@@ -104,8 +107,7 @@ private:
             //створення рядка для відрізку
             Label^ rowLabel = gcnew Label();
             rowLabel->Text = L"Введіть координати відрізку №" + (i + 1).ToString();
-            rowLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(204)));
+            rowLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
             rowLabel->Location = System::Drawing::Point(margin, y);
             rowLabel->Size = System::Drawing::Size(labelWidth, rowHeight);
             this->Controls->Add(rowLabel);
@@ -162,7 +164,6 @@ private:
         CreateButton->Click += gcnew System::EventHandler(this, &EnterCoordinatesWindow::CreateButtonFigure_Click);
         CreateButton->BackColor = System::Drawing::Color::LightPink;
         CreateButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-
         this->Controls->Add(CreateButton);
 
         //кнопка для скасування дії
@@ -211,7 +212,7 @@ private:
     {
         try
         {
-            //створення відрізку за координатами
+            //створення відрізків за координатами
             Segment* segs = new Segment[rowCount];
 
             //цикл для коректного вводу координат у масив з відрізками

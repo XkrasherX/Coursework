@@ -10,7 +10,7 @@ const double PI = 3.14159265358979; //число пі
 const float CLOSE_OFFSET = 0.1f; //похибка в утворенні послідовних відрізків
 
 //перевірка чи точка всередині поля
-static bool pointInField(const PointSegment& p) 
+bool pointInField(const PointSegment& p) 
 {
     return p.x >= 0 && p.x <= FIELD_SIZE && p.y >= 0 && p.y <= FIELD_SIZE;
 }
@@ -28,15 +28,18 @@ Figure::Figure()
 // конструктор з параметрами, ім'я, відрізки, к-ть відрізків
 Figure::Figure(const std::string& figure_name, Segment* arr_segment, int count)
 {
+    //кількість відрізків менша за 3
     if (count < 3) {
         throw FigureException("Фігура повинна складатися принаймі з 3 відрізків!");
     }
 
+    //перевірка чи точка всередині поля для кожного відрізка
     for (int i = 0; i < count; i++) {
         if (!pointInField(arr_segment[i].getStart()) || !pointInField(arr_segment[i].getEnd())) {
             throw FigureException("Координати повині лежати в межах від 0 до 715!");
         }
     }
+
 
     for (int i = 0; i < count; i++) {
         PointSegment end = arr_segment[i].getEnd();
@@ -75,7 +78,7 @@ Figure::Figure(const Figure& other)
     }
 }
 
-//конструктор переміщення
+//оператор копіювання
 Figure& Figure::operator=(const Figure& other)
 {
     if (this == &other) return *this;
@@ -223,30 +226,22 @@ std::ostream& operator<<(std::ostream& out, const Figure& other)
 //оператор вводу
 std::istream& operator>>(std::istream& in, Figure& other)
 {
-    std::string file_name;
-    int file_count;
-   
+    std::string name;
+    int count;
+
     in >> std::ws;
-    if (!std::getline(in, file_name)) return in;
-    if (!(in >> file_count)) return in;
+    std::getline(in, name);
+    in >> count;
+    if (!in) return in;
 
-    if (file_count < 3 || file_count > 100000) {
-        in.setstate(std::ios::failbit);
-        return in;
-    }
+    if (count < 3 || count > 100000)
+        throw FigureException("Некоректна кількість відрізків у файлі!");
 
-    std::vector<Segment> tmp(file_count);
-    for (int i = 0; i < file_count; i++) {
-        if (!(in >> tmp[i])) return in;
-    }
+    std::vector<Segment> segs(count);
+    for (int i = 0; i < count; i++)
+        in >> segs[i];
+    if (!in) return in;
 
-    try {
-        
-        Figure result(file_name, tmp.data(), file_count);
-        other = result;
-    }
-    catch (FigureException&) {
-        in.setstate(std::ios::failbit);
-    }
+    other = Figure(name, &segs[0], count);   // конструктор сам перевіряє дані
     return in;
 }

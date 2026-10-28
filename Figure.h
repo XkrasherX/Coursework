@@ -3,6 +3,7 @@
 #include <string>
 #include "Segment.h"
 
+//клас для створення Фігури
 class Figure
 {
 private:
